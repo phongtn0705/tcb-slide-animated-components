@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>23 · Motion Path Animation</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.motion-wrap { display:flex; flex-direction:column; align-items:center; gap:1.25rem; }
+svg.mp-svg { overflow:visible; }
+
+.mp-path { fill:none; stroke:#e3e4e6; stroke-width:2; stroke-dasharray:6 4; }
+.mp-node { }
+.mp-circle { transition:fill .3s, box-shadow .3s; }
+.mp-label-txt { font-family:'Be Vietnam Pro',sans-serif; font-size:10px; font-weight:700; text-anchor:middle; fill:#212121; }
+.mp-sublabel { font-family:'Be Vietnam Pro',sans-serif; font-size:8.5px; fill:#a2a2a2; text-anchor:middle; }
+
+.mp-traveler {
+  filter:drop-shadow(0 2px 6px rgba(237,27,36,.5));
+}
+.mp-caption {
+  font-size:.8rem; color:#616161; text-align:center; max-width:420px; line-height:1.6;
+}
+</style>
+</head>
+<body>
+<div class="motion-wrap">
+<svg class="mp-svg" id="mpSvg" viewBox="0 0 500 200" width="500" height="200"></svg>
+<div class="mp-caption" id="mpCaption">Hành trình khách hàng từ nhận biết đến trở thành Premium</div>
+</div>
+
+<script>
+const svg = document.getElementById('mpSvg');
+
+const nodes = [
+  {x:40,  y:100, label:'Nhận biết', sub:'Awareness', color:'#e3e4e6', textColor:'#a2a2a2'},
+  {x:140, y:60,  label:'Tìm hiểu',  sub:'Interest',  color:'#e3e4e6', textColor:'#a2a2a2'},
+  {x:240, y:110, label:'Đăng ký',   sub:'Onboard',   color:'#e3e4e6', textColor:'#a2a2a2'},
+  {x:340, y:55,  label:'Giao dịch', sub:'Transact',  color:'#e3e4e6', textColor:'#a2a2a2'},
+  {x:460, y:100, label:'Premium',   sub:'Loyalty',   color:'#d6b973', textColor:'#8a6e20'},
+];
+
+const captions = [
+  'Khách hàng nhận biết Techcombank qua quảng cáo',
+  'Tìm hiểu sản phẩm trên website và app',
+  'Đăng ký tài khoản trong 5 phút',
+  'Thực hiện giao dịch đầu tiên',
+  'Trở thành khách hàng Premium ⭐',
+];
+
+// Draw the path through all nodes
+const pathD = `M ${nodes.map(n=>`${n.x},${n.y}`).join(' C ')}`;
+// Use a smooth cubic bezier path
+const pts = nodes.map(n=>[n.x,n.y]);
+let d = `M ${pts[0][0]},${pts[0][1]}`;
+for(let i=1;i<pts.length;i++){
+  const cp1x = (pts[i-1][0]+pts[i][0])/2;
+  const cp1y = pts[i-1][1];
+  const cp2x = (pts[i-1][0]+pts[i][0])/2;
+  const cp2y = pts[i][1];
+  d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${pts[i][0]},${pts[i][1]}`;
+}
+
+const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+path.setAttribute('d',d);
+path.setAttribute('class','mp-path');
+path.setAttribute('id','mpPath');
+svg.appendChild(path);
+
+// Draw node circles
+nodes.forEach((n,i)=>{
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r','22');
+  c.setAttribute('fill','#f5f6f8');c.setAttribute('stroke',n.color);c.setAttribute('stroke-width','2');
+  c.setAttribute('id','nc'+i);
+  g.appendChild(c);
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',n.x);t.setAttribute('y',n.y-2);t.setAttribute('class','mp-label-txt');
+  t.style.fill=n.textColor;t.textContent=n.label;g.appendChild(t);
+  const s=document.createElementNS('http://www.w3.org/2000/svg','text');
+  s.setAttribute('x',n.x);s.setAttribute('y',n.y+11);s.setAttribute('class','mp-sublabel');
+  s.textContent=n.sub;g.appendChild(s);
+  svg.appendChild(g);
+});
+
+// Traveler dot (animated along path)
+const traveler = document.createElementNS('http://www.w3.org/2000/svg','circle');
+traveler.setAttribute('r','9');
+traveler.setAttribute('fill','#ed1b24');
+traveler.setAttribute('class','mp-traveler');
+svg.appendChild(traveler);
+
+// Animate along path
+const totalLen = path.getTotalLength();
+let progress = 0;
+let nodeIdx = 0;
+const nodePcts = nodes.map(n=>{
+  // find closest point on path
+  let best=0,bestDist=Infinity;
+  for(let t=0;t<=1;t+=.001){
+    const p=path.getPointAtLength(t*totalLen);
+    const d=Math.hypot(p.x-n.x,p.y-n.y);
+    if(d<bestDist){bestDist=d;best=t;}
+  }
+  return best;
+});
+
+function highlightNode(i){
+  nodes.forEach((_,j)=>{
+    const c=document.getElementById('nc'+j);
+    if(j===i){
+      c.setAttribute('fill',nodes[j].color==='#d6b973'?'rgba(214,185,115,.2)':'rgba(237,27,36,.08)');
+      c.setAttribute('stroke',j===nodes.length-1?'#d6b973':'#ed1b24');
+      c.setAttribute('stroke-width','2.5');
+    } else if(j<i){
+      c.setAttribute('fill','rgba(27,21,100,.05)');
+      c.setAttribute('stroke','#1b1564');
+    }
+  });
+  document.getElementById('mpCaption').textContent=captions[i];
+}
+
+let step=0;
+function moveToNext(){
+  if(step>=nodes.length) return;
+  const target=nodePcts[step];
+  const start=progress;
+  const dur=900;
+  const t0=performance.now();
+  (function tick(now){
+    const p=Math.min((now-t0)/dur,1);
+    const ease=1-Math.pow(2,-10*p);
+    progress=start+(target-start)*ease;
+    const pt=path.getPointAtLength(progress*totalLen);
+    traveler.setAttribute('cx',pt.x);
+    traveler.setAttribute('cy',pt.y);
+    if(p<1) requestAnimationFrame(tick);
+    else {
+      highlightNode(step);
+      step++;
+      if(step<nodes.length) setTimeout(moveToNext,700);
+    }
+  })(t0);
+}
+
+const startPt=path.getPointAtLength(0);
+traveler.setAttribute('cx',startPt.x);
+traveler.setAttribute('cy',startPt.y);
+setTimeout(moveToNext,500);
+</script>
+</body>
+</html>

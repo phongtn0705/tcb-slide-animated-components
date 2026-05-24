@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>20 · Terminal UI Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'JetBrains Mono',monospace; }
+.terminal {
+  background:#0d1117; border-radius:12px; overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+  max-width:560px;
+}
+.term-bar {
+  background:#161b22; padding:.65rem 1rem;
+  display:flex; align-items:center; gap:.5rem;
+  border-bottom:1px solid #21262d;
+}
+.term-dot { width:12px;height:12px;border-radius:50%; }
+.term-dot.r{background:#ff5f57}.term-dot.y{background:#febc2e}.term-dot.g{background:#28c840}
+.term-title { font-size:.72rem; color:#8b949e; margin-left:.5rem; }
+.term-body  { padding:1.25rem 1.5rem; min-height:220px; }
+
+.term-line { font-size:.82rem; line-height:1.7; white-space:pre; display:block; }
+.prompt    { color:#39d353; }
+.cmd       { color:#e6edf3; }
+.comment   { color:#8b949e; }
+.output    { color:#c9d1d9; }
+.success   { color:#39d353; }
+.warning   { color:#d6b973; }
+.error     { color:#ed1b24; }
+.info      { color:#4361ee; }
+.highlight { color:#ed1b24; font-weight:700; }
+
+.cursor {
+  display:inline-block; width:7px; height:.9em;
+  background:#39d353; vertical-align:text-bottom;
+  animation:blink .8s steps(1) infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="term-bar">
+    <div class="term-dot r"></div>
+    <div class="term-dot y"></div>
+    <div class="term-dot g"></div>
+    <span class="term-title">claude-agent · tcb-demo</span>
+  </div>
+  <div class="term-body" id="termBody">
+    <span class="cursor"></span>
+  </div>
+</div>
+
+<script>
+const lines=[
+  {t:'prompt', text:'claude run --task "analyze Q2 performance" --model sonnet-4-6'},
+  {t:'comment',text:'# Initializing agent…'},
+  {t:'info',   text:'✦ Reading: reports/q2-2024.csv  [4,821 rows]'},
+  {t:'info',   text:'✦ Reading: targets/q2-targets.json'},
+  {t:'output', text:''},
+  {t:'output', text:'Analysis complete. Summary:'},
+  {t:'success',text:'  ✓ Revenue:   VND 8.7T (+14.2% YoY)'},
+  {t:'success',text:'  ✓ Customers: 12.5M  (+8.3% QoQ)'},
+  {t:'warning',text:'  ⚠ NPS Score: 74     (target: 80)'},
+  {t:'error',  text:'  ✗ Churn:     3.2%   (above 2.5% threshold)'},
+  {t:'output', text:''},
+  {t:'output', text:'Recommendation: Focus retention on segment C.'},
+  {t:'prompt', text:'_'},
+];
+
+const body=document.getElementById('termBody');
+const cursor=body.querySelector('.cursor');
+let i=0;
+
+function addLine(l){
+  const span=document.createElement('span');
+  span.className='term-line';
+  if(l.t==='prompt'){
+    span.innerHTML=`<span class="prompt">❯ </span><span class="cmd">${l.text}</span>`;
+  } else {
+    span.className=`term-line ${l.t}`;
+    span.textContent=l.text;
+  }
+  body.insertBefore(span,cursor);
+}
+
+function run(){
+  if(i>=lines.length){cursor.style.animation='blink .8s steps(1) infinite';return;}
+  const l=lines[i++];
+  if(l.t==='prompt'&&l.text!=='_'){
+    // type it
+    addLine({t:'prompt',text:''});
+    const cmdSpan=body.querySelector('.term-line:last-of-type .cmd')||body.insertBefore(document.createElement('span'),cursor);
+    let ci=0,cmdEl=body.querySelectorAll('.term-line')[body.querySelectorAll('.term-line').length-1].querySelector('.cmd');
+    if(!cmdEl){setTimeout(run,40);return;}
+    (function typeCmd(){
+      if(ci<l.text.length){cmdEl.textContent+=l.text[ci++];setTimeout(typeCmd,28);}
+      else setTimeout(run,300);
+    })();
+  } else if(l.text==='_'){
+    // final prompt, keep cursor
+    const span=document.createElement('span');
+    span.className='term-line';
+    span.innerHTML=`<span class="prompt">❯ </span>`;
+    body.insertBefore(span,cursor);
+  } else {
+    addLine(l);
+    setTimeout(run, l.t==='output'&&!l.text?80:120);
+  }
+}
+
+setTimeout(run,600);
+</script>
+</body>
+</html>

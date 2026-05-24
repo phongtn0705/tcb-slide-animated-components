@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>17 · Animated Donut (Multi-segment)</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.donut-multi-wrap { display:flex; gap:3rem; align-items:center; flex-wrap:wrap; }
+.donut-main { position:relative; width:200px; height:200px; flex-shrink:0; }
+.donut-main svg { width:200px; height:200px; }
+
+.seg-path {
+  fill:none; stroke-width:22; stroke-linecap:butt;
+  transform-origin:center; transform:rotate(-90deg);
+  stroke-dasharray:0 502;
+  transition:stroke-dasharray 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+.center-label { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center; }
+.center-val  { font-size:2rem; font-weight:700; color:#212121; line-height:1; }
+.center-unit { font-size:.72rem; color:#a2a2a2; margin-top:.2rem; }
+
+.donut-legend { flex:1; min-width:180px; }
+.seg-row { display:flex; align-items:center; gap:.75rem; padding:.6rem 0; border-bottom:1px solid #e3e4e6; }
+.seg-row:last-child { border-bottom:none; }
+.seg-color { width:12px;height:12px;border-radius:3px;flex-shrink:0; }
+.seg-name  { flex:1; font-size:.875rem; font-weight:500; color:#212121; }
+.seg-pct   { font-size:.875rem; font-weight:700; }
+.seg-val   { font-size:.72rem; color:#a2a2a2; }
+</style>
+</head>
+<body>
+<div class="donut-multi-wrap">
+  <div class="donut-main">
+    <svg viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="80" fill="none" stroke="#f0f0f0" stroke-width="22"/>
+      <!-- segments drawn by JS -->
+      <g id="segments"></g>
+    </svg>
+    <div class="center-label">
+      <div class="center-val">100</div>
+      <div class="center-unit">% total</div>
+    </div>
+  </div>
+
+  <div class="donut-legend" id="legend"></div>
+</div>
+
+<script>
+const R=80, CX=90, CY=90;
+const C=2*Math.PI*R;
+const segs=[
+  {label:'Tiền gửi',     pct:38, color:'#ed1b24',  val:'VND 4.8T'},
+  {label:'Cho vay',      pct:31, color:'#1b1564',  val:'VND 3.9T'},
+  {label:'Thanh toán',   pct:18, color:'#d6b973',  val:'VND 2.3T'},
+  {label:'Đầu tư',       pct:9,  color:'#4361ee',  val:'VND 1.1T'},
+  {label:'Khác',         pct:4,  color:'#a2a2a2',  val:'VND 0.5T'},
+];
+
+const g=document.getElementById('segments');
+const legendEl=document.getElementById('legend');
+let offset=0;
+
+segs.forEach((s,i)=>{
+  const len=(s.pct/100)*C;
+  const path=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  path.setAttribute('cx',CX);path.setAttribute('cy',CY);path.setAttribute('r',R);
+  path.setAttribute('class','seg-path');
+  path.setAttribute('stroke',s.color);
+  path.style.strokeDashoffset = -offset;
+  path.setAttribute('data-len',len);
+  g.appendChild(path);
+  offset+=len;
+
+  // legend row
+  const row=document.createElement('div');
+  row.className='seg-row';
+  row.innerHTML=`<div class="seg-color" style="background:${s.color}"></div>
+    <span class="seg-name">${s.label}</span>
+    <span class="seg-pct" style="color:${s.color}">${s.pct}%</span>
+    <span class="seg-val">${s.val}</span>`;
+  legendEl.appendChild(row);
+});
+
+setTimeout(()=>{
+  document.querySelectorAll('.seg-path').forEach(p=>{
+    const len=parseFloat(p.getAttribute('data-len'));
+    p.style.strokeDasharray=`${len-1} ${C-len+1}`;
+  });
+},300);
+</script>
+</body>
+</html>

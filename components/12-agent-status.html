@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>12 · Agent Status Animation</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.agent-row { display:flex; align-items:center; gap:0; flex-wrap:nowrap; overflow-x:auto; }
+.state-node {
+  display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  opacity:.3; transform:scale(.92);
+  transition: opacity .4s ease, transform .4s ease;
+  flex-shrink: 0;
+  padding: 0 .5rem;
+}
+.state-node.active { opacity:1; transform:scale(1); }
+.state-node.done   { opacity:.7; transform:scale(.95); }
+
+.state-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.3rem;
+  border: 2px solid #e3e4e6;
+  background: #f5f6f8;
+  position: relative;
+  transition: border-color .4s, background .4s, box-shadow .4s;
+}
+.state-node.active .state-icon {
+  border-color: #ed1b24;
+  background: rgba(237,27,36,.08);
+  box-shadow: 0 0 0 6px rgba(237,27,36,.12);
+  animation: pulse-node 1.4s ease-in-out infinite;
+}
+.state-node.done .state-icon {
+  border-color: #1b1564;
+  background: rgba(27,21,100,.06);
+}
+@keyframes pulse-node {
+  0%,100% { box-shadow: 0 0 0 6px rgba(237,27,36,.12); }
+  50%      { box-shadow: 0 0 0 12px rgba(237,27,36,.04); }
+}
+.state-label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#a2a2a2; text-align:center; max-width:70px; }
+.state-node.active .state-label { color:#ed1b24; }
+.state-node.done   .state-label { color:#1b1564; }
+
+.arrow {
+  font-size:1rem; color:#e3e4e6; flex-shrink:0; padding:0 .25rem; margin-bottom:1.5rem;
+  transition: color .4s;
+}
+.arrow.lit { color:#ed1b24; }
+
+.status-bar {
+  margin-top:1.5rem; padding:1rem 1.25rem;
+  background:#f5f6f8; border-radius:8px;
+  display:flex; align-items:center; gap:.75rem;
+}
+.spinner {
+  width:16px;height:16px;border:2px solid #e3e4e6;
+  border-top-color:#ed1b24;border-radius:50%;
+  animation:spin .8s linear infinite;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.status-text { font-size:.875rem; color:#212121; font-weight:500; }
+.status-sub  { font-size:.75rem; color:#a2a2a2; }
+</style>
+</head>
+<body>
+<div class="agent-row" id="agentRow">
+  <div class="state-node" data-i="0"><div class="state-icon">💤</div><div class="state-label">Idle</div></div>
+  <div class="arrow" data-after="0">→</div>
+  <div class="state-node" data-i="1"><div class="state-icon">🧠</div><div class="state-label">Planning</div></div>
+  <div class="arrow" data-after="1">→</div>
+  <div class="state-node" data-i="2"><div class="state-icon">⚙️</div><div class="state-label">Executing</div></div>
+  <div class="arrow" data-after="2">→</div>
+  <div class="state-node" data-i="3"><div class="state-icon">🔍</div><div class="state-label">Reviewing</div></div>
+  <div class="arrow" data-after="3">→</div>
+  <div class="state-node" data-i="4"><div class="state-icon">✅</div><div class="state-label">Done</div></div>
+</div>
+
+<div class="status-bar" id="statusBar">
+  <div class="spinner" id="spinner"></div>
+  <div>
+    <div class="status-text" id="statusText">Initializing agent…</div>
+    <div class="status-sub" id="statusSub">Waiting for task</div>
+  </div>
+</div>
+
+<script>
+const states = [
+  { label:'Initializing agent…', sub:'Waiting for task' },
+  { label:'Planning approach…', sub:'Analyzing context window · 12,450 tokens' },
+  { label:'Executing tools…', sub:'read_file → grep → edit · 3 calls' },
+  { label:'Reviewing output…', sub:'Checking correctness and edge cases' },
+  { label:'Task complete', sub:'3 files modified · 0 errors · 4.2s' },
+];
+const nodes = document.querySelectorAll('.state-node');
+const arrows = document.querySelectorAll('.arrow');
+let cur = 0;
+
+function setActive(i) {
+  nodes.forEach((n,j) => {
+    n.classList.remove('active','done');
+    if(j === i) n.classList.add('active');
+    else if(j < i) n.classList.add('done');
+  });
+  arrows.forEach((a,j) => {
+    a.classList.toggle('lit', j < i);
+  });
+  document.getElementById('statusText').textContent = states[i].label;
+  document.getElementById('statusSub').textContent = states[i].sub;
+  if(i === nodes.length-1) {
+    document.getElementById('spinner').style.animation = 'none';
+    document.getElementById('spinner').style.borderTopColor = '#1b1564';
+    document.getElementById('spinner').style.border = '2px solid #1b1564';
+  }
+}
+
+function run() {
+  setActive(cur);
+  if(cur < nodes.length - 1) {
+    const delay = cur === 0 ? 800 : cur === 4 ? 0 : 1200 + Math.random()*600;
+    setTimeout(() => { cur++; run(); }, delay);
+  }
+}
+setTimeout(run, 400);
+</script>
+</body>
+</html>

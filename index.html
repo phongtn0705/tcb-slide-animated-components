@@ -6,7 +6,7 @@
     <title>Animated Components — Techcombank Preset</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --tcb-red:   #ed1b24;
@@ -457,12 +457,27 @@
     <a href="#c7" title="Bar Chart"></a>
     <a href="#c8" title="Toast Notifications"></a>
     <a href="#c9" title="Shimmer Reveal"></a>
+    <a href="#c10" title="Token Stream"></a>
+    <a href="#c11" title="Context Window Jar"></a>
+    <a href="#c12" title="Agent Status"></a>
+    <a href="#c13" title="Activity Heatmap"></a>
+    <a href="#c14" title="Autonomy Spectrum"></a>
+    <a href="#c15" title="Agentic Loop"></a>
+    <a href="#c16" title="Trend Line Chart"></a>
+    <a href="#c17" title="Multi-segment Donut"></a>
+    <a href="#c18" title="Horizontal Bar Chart"></a>
+    <a href="#c19" title="Radar Chart"></a>
+    <a href="#c20" title="Terminal UI"></a>
+    <a href="#c21" title="Isometric Visual"></a>
+    <a href="#c22" title="Blueprint Diagram"></a>
+    <a href="#c23" title="Motion Path"></a>
+    <a href="#c24" title="Orbiting Particles"></a>
 </nav>
 
 <!-- ── PAGE HEADER ── -->
 <header class="page-header">
     <h1>Animated Components</h1>
-    <p>Frontend Slides · Techcombank Preset · 9 components · scroll-triggered + replay</p>
+    <p>Frontend Slides · Techcombank Preset · 24 components · scroll-triggered + replay</p>
 </header>
 
 <!-- ════════════════════════════════════════════
@@ -893,6 +908,884 @@ const navObs = new IntersectionObserver(entries=>{
         }
     });
 },{threshold:0.5});
+document.querySelectorAll('.comp').forEach(s=>navObs.observe(s));
+</script>
+
+<!-- ════ SECTION DIVIDER ════ -->
+<div style="max-width:860px;margin:0 auto 3rem;padding-top:2rem;border-top:2px solid var(--tcb-line);text-align:center">
+  <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--tcb-red);margin-bottom:.3rem">Part 2</div>
+  <div style="font-size:1.5rem;font-weight:300;color:var(--tcb-navy)">AI &amp; Tech Components</div>
+  <div style="font-size:.85rem;color:var(--tcb-muted);margin-top:.3rem">Token streams, agent loops, charts, diagrams</div>
+</div>
+
+<!-- ════ 10 TOKEN STREAM ════ -->
+<section class="comp" id="c10">
+  <div class="comp-label">Component 10</div>
+  <div class="comp-title">Token Stream</div>
+  <div class="comp-desc">Animated text streaming token-by-token như LLM output. Dùng cho AI demo slides, show how Claude responds in real-time.</div>
+  <div class="demo" style="background:#0d1117;border-color:#21262d">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#39d353;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;opacity:.7">▶ token stream · live</div>
+    <div id="streamOut10" style="font-family:'JetBrains Mono',monospace;font-size:.9rem;line-height:1.7;color:#e6edf3;min-height:3.5em"><span id="cur10" style="display:inline-block;width:8px;height:.9em;background:#39d353;vertical-align:text-bottom;animation:blink .8s steps(1) infinite"></span></div>
+    <div style="display:flex;gap:1.5rem;margin-top:1rem">
+      <div style="text-align:center"><div id="tc10" style="font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:#39d353">0</div><div style="font-size:.65rem;color:#8b949e">tokens</div></div>
+      <div style="text-align:center"><div id="ts10" style="font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:#39d353">0</div><div style="font-size:.65rem;color:#8b949e">tok/s</div></div>
+    </div>
+    <button class="replay-btn" style="border-color:#39d353;color:#39d353;margin-top:1.25rem" onclick="replayStream10()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 11 CONTEXT WINDOW JAR ════ -->
+<section class="comp" id="c11">
+  <div class="comp-label">Component 11</div>
+  <div class="comp-title">Context Window Jar</div>
+  <div class="comp-desc">Jar filling up to show context usage — system prompt, memory, tools, conversation. Perfect for AI architecture slides.</div>
+  <div class="demo">
+    <div style="display:flex;gap:3rem;align-items:flex-end;justify-content:center;padding:.5rem 0 0">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.75rem">
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tcb-muted)">128K context</div>
+        <div id="jar11a" style="width:72px;height:180px;border:2.5px solid var(--tcb-navy);border-radius:4px 4px 10px 10px;position:relative;overflow:hidden;background:var(--tcb-bg)">
+          <div id="fill11a" style="position:absolute;bottom:0;left:0;right:0;height:0;transition:height 1.6s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column-reverse;overflow:hidden">
+            <div style="flex-shrink:0;height:14%;background:#1b1564;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">system</div>
+            <div style="flex-shrink:0;height:18%;background:#4361ee;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">memory</div>
+            <div style="flex-shrink:0;height:12%;background:var(--tcb-red);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">tools</div>
+            <div style="flex-shrink:0;height:32%;background:var(--tcb-gold);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">convo</div>
+          </div>
+        </div>
+        <div id="pct11a" style="font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--tcb-navy)">0%</div>
+        <div style="font-size:.72rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace">76K / 128K</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.75rem">
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tcb-muted)">32K context</div>
+        <div id="jar11b" style="width:72px;height:180px;border:2.5px solid var(--tcb-navy);border-radius:4px 4px 10px 10px;position:relative;overflow:hidden;background:var(--tcb-bg)">
+          <div id="fill11b" style="position:absolute;bottom:0;left:0;right:0;height:0;transition:height 1.6s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column-reverse;overflow:hidden">
+            <div style="flex-shrink:0;height:18%;background:#1b1564;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">system</div>
+            <div style="flex-shrink:0;height:20%;background:var(--tcb-red);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">tools</div>
+            <div style="flex-shrink:0;height:54%;background:var(--tcb-gold);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.8)">convo</div>
+          </div>
+        </div>
+        <div id="pct11b" style="font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--tcb-red)">0%</div>
+        <div style="font-size:.72rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace">29K / 32K</div>
+      </div>
+    </div>
+    <button class="replay-btn" onclick="replayJars()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 12 AGENT STATUS ════ -->
+<section class="comp" id="c12">
+  <div class="comp-label">Component 12</div>
+  <div class="comp-title">Agent Status Animation</div>
+  <div class="comp-desc">State machine showing agent lifecycle: Idle → Planning → Executing → Reviewing → Done. Dùng cho AI workflow slides.</div>
+  <div class="demo">
+    <div id="agRow12" style="display:flex;align-items:center;gap:0;overflow-x:auto"></div>
+    <div style="margin-top:1.25rem;padding:.875rem 1.25rem;background:var(--tcb-bg);border-radius:8px;display:flex;align-items:center;gap:.75rem">
+      <div id="spin12" style="width:16px;height:16px;border:2px solid var(--tcb-line);border-top-color:var(--tcb-red);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0"></div>
+      <div>
+        <div id="st12" style="font-size:.875rem;font-weight:600;color:var(--tcb-text)">Initializing…</div>
+        <div id="ss12" style="font-size:.75rem;color:var(--tcb-muted)">Waiting for task</div>
+      </div>
+    </div>
+    <button class="replay-btn" onclick="replayAgent12()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 13 HEATMAP ════ -->
+<section class="comp" id="c13">
+  <div class="comp-label">Component 13</div>
+  <div class="comp-title">Activity Heat Map</div>
+  <div class="comp-desc">GitHub-style contribution grid. Dùng để visualize transaction frequency, user activity, hoặc team velocity theo ngày.</div>
+  <div class="demo">
+    <div style="display:flex;justify-content:space-between;margin-bottom:.75rem">
+      <div><div style="font-size:.875rem;font-weight:600">Transaction Activity</div><div style="font-size:.72rem;color:var(--tcb-muted)">Giao dịch theo ngày · 16 tuần</div></div>
+      <div style="text-align:right"><div id="hm13tot" style="font-size:.875rem;font-weight:700;color:var(--tcb-red)">0</div><div style="font-size:.72rem;color:var(--tcb-muted)">transactions</div></div>
+    </div>
+    <div style="display:flex;gap:.5rem;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:2px;padding-top:18px">
+        <div style="height:12px;font-size:.6rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace;line-height:12px">Mon</div>
+        <div style="height:12px"></div>
+        <div style="height:12px;font-size:.6rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace;line-height:12px">Wed</div>
+        <div style="height:12px"></div>
+        <div style="height:12px;font-size:.6rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace;line-height:12px">Fri</div>
+        <div style="height:12px"></div>
+        <div style="height:12px;font-size:.6rem;color:var(--tcb-muted);font-family:'JetBrains Mono',monospace;line-height:12px">Sun</div>
+      </div>
+      <div id="hm13grid" style="display:flex;gap:2px;overflow-x:auto"></div>
+    </div>
+    <button class="replay-btn" onclick="replayHeatmap()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 14 AUTONOMY SPECTRUM ════ -->
+<section class="comp" id="c14">
+  <div class="comp-label">Component 14</div>
+  <div class="comp-title">Autonomy Spectrum</div>
+  <div class="comp-desc">Animated slider từ Manual đến Full Autonomous — 5 cấp độ. Dùng cho AI strategy slides, explaining agentic levels.</div>
+  <div class="demo">
+    <div style="max-width:560px">
+      <div style="font-size:1rem;font-weight:600;margin-bottom:.2rem">Autonomy Spectrum</div>
+      <div style="font-size:.8rem;color:var(--tcb-muted);margin-bottom:2rem">From human-driven to fully autonomous AI agent</div>
+      <div style="position:relative;height:8px;border-radius:99px;background:linear-gradient(to right,#e3e4e6 0%,rgba(237,27,36,.3) 40%,#ed1b24 100%);margin-bottom:1rem">
+        <div id="specDot14" style="position:absolute;top:50%;width:22px;height:22px;background:#fff;border:3px solid var(--tcb-red);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(237,27,36,.3);left:8%;transition:left 1.4s cubic-bezier(0.16,1,0.3,1)"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem">
+        <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tcb-muted)">Manual</span>
+        <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tcb-red)">Autonomous</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem" id="specCards14"></div>
+    </div>
+    <button class="replay-btn" onclick="replaySpectrum()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 15 AGENTIC LOOP ════ -->
+<section class="comp" id="c15">
+  <div class="comp-label">Component 15</div>
+  <div class="comp-title">Agentic Loop</div>
+  <div class="comp-desc">Circular Plan → Act → Observe → Reflect loop với active state animation. Dùng cho AI methodology slides.</div>
+  <div class="demo" style="display:flex;flex-direction:column;align-items:center;gap:1.25rem">
+    <svg id="loopSvg15" width="280" height="280" viewBox="0 0 300 300" style="overflow:visible"></svg>
+    <div style="text-align:center;padding:.75rem 1.5rem;background:var(--tcb-bg);border-radius:8px;min-width:240px">
+      <div id="ls15step" style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tcb-red)">—</div>
+      <div id="ls15desc" style="font-size:.875rem;font-weight:500;margin-top:.2rem">Initializing…</div>
+      <div id="ls15iter" style="font-size:.72rem;color:var(--tcb-muted);margin-top:.1rem;font-family:'JetBrains Mono',monospace">iteration 0</div>
+    </div>
+    <button class="replay-btn" onclick="replayLoop()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 16 TREND LINE ════ -->
+<section class="comp" id="c16">
+  <div class="comp-label">Component 16</div>
+  <div class="comp-title">Animated Trend Line Chart</div>
+  <div class="comp-desc">SVG multi-line chart với path drawing animation. Dùng cho weekly/monthly growth comparison giữa các kênh.</div>
+  <div class="demo">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+      <div><div style="font-size:.875rem;font-weight:600">Doanh số tuần — Tăng trưởng theo kênh</div><div style="font-size:.72rem;color:var(--tcb-muted);margin-top:.2rem">16 tuần · tỷ đồng VND</div></div>
+      <div style="display:flex;gap:1rem">
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--tcb-muted)"><div style="width:20px;height:2.5px;background:var(--tcb-red);border-radius:2px"></div>Digital</div>
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--tcb-muted)"><div style="width:20px;height:2.5px;background:var(--tcb-navy);border-radius:2px"></div>Branch</div>
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--tcb-muted)"><div style="width:20px;height:2.5px;background:var(--tcb-gold);border-radius:2px"></div>Partner</div>
+      </div>
+    </div>
+    <svg id="lineSvg16" viewBox="0 0 560 200" style="width:100%;overflow:visible;display:block"></svg>
+    <button class="replay-btn" onclick="replayLine()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 17 MULTI-SEGMENT DONUT ════ -->
+<section class="comp" id="c17">
+  <div class="comp-label">Component 17</div>
+  <div class="comp-title">Multi-segment Donut Chart</div>
+  <div class="comp-desc">Multi-segment donut với legend table. Dùng cho revenue breakdown, portfolio allocation, product mix.</div>
+  <div class="demo">
+    <div style="display:flex;gap:3rem;align-items:center;flex-wrap:wrap">
+      <div style="position:relative;width:180px;height:180px;flex-shrink:0">
+        <svg id="donut17svg" width="180" height="180" viewBox="0 0 180 180"></svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:1.8rem;font-weight:700;line-height:1">100</div>
+          <div style="font-size:.72rem;color:var(--tcb-muted);margin-top:.2rem">% total</div>
+        </div>
+      </div>
+      <div id="leg17" style="flex:1;min-width:180px"></div>
+    </div>
+    <button class="replay-btn" onclick="replayDonut17()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 18 HORIZONTAL BAR ════ -->
+<section class="comp" id="c18">
+  <div class="comp-label">Component 18</div>
+  <div class="comp-title">Horizontal Bar Chart</div>
+  <div class="comp-desc">Horizontal bars grow from left. Dùng cho comparison giữa nhiều items — regions, products, teams.</div>
+  <div class="demo">
+    <div id="hbar18" style="display:flex;flex-direction:column;gap:.9rem;max-width:500px"></div>
+    <button class="replay-btn" onclick="replayHbar()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 19 RADAR CHART ════ -->
+<section class="comp" id="c19">
+  <div class="comp-label">Component 19</div>
+  <div class="comp-title">Radar / Spider Chart</div>
+  <div class="comp-desc">SVG radar chart với 2 datasets overlapping. Dùng cho KPI comparison year-over-year hoặc competitor benchmarking.</div>
+  <div class="demo">
+    <div style="display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap">
+      <svg id="radar19" width="220" height="220" viewBox="0 0 240 240" style="overflow:visible;flex-shrink:0"></svg>
+      <div>
+        <div style="font-size:.75rem;font-weight:700;margin-bottom:.5rem">KPI so sánh</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem"><div style="width:10px;height:10px;border-radius:50%;background:var(--tcb-red);flex-shrink:0"></div>Năm 2024</div>
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem"><div style="width:10px;height:10px;border-radius:50%;background:var(--tcb-navy);flex-shrink:0"></div>Năm 2023</div>
+        </div>
+        <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.3rem" id="radarLeg19"></div>
+      </div>
+    </div>
+    <button class="replay-btn" onclick="replayRadar()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 20 TERMINAL ════ -->
+<section class="comp" id="c20">
+  <div class="comp-label">Component 20</div>
+  <div class="comp-title">Terminal UI Mockup</div>
+  <div class="comp-desc">Dark terminal with typewriter command output. Dùng cho AI/dev demo slides — show Claude agent running analysis.</div>
+  <div class="demo" style="background:#0d1117;border-color:#21262d;padding:0;overflow:hidden">
+    <div style="background:#161b22;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #21262d">
+      <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div>
+      <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
+      <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#8b949e;margin-left:.5rem">claude-agent · tcb-demo</span>
+    </div>
+    <div id="term20" style="padding:1.25rem 1.5rem;min-height:200px;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7">
+      <span id="tcur20" style="display:inline-block;width:7px;height:.9em;background:#39d353;vertical-align:text-bottom;animation:blink .8s steps(1) infinite"></span>
+    </div>
+    <button class="replay-btn" style="margin:0 1.5rem 1.25rem;border-color:#39d353;color:#39d353" onclick="replayTerminal()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 21 ISOMETRIC ════ -->
+<section class="comp" id="c21">
+  <div class="comp-label">Component 21</div>
+  <div class="comp-title">Isometric Geometric Visual</div>
+  <div class="comp-desc">3D isometric cubes built with pure CSS/SVG. Dùng cho tech stack visualization, layered architecture diagrams.</div>
+  <div class="demo" style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+    <svg id="iso21" viewBox="0 0 340 240" width="340" height="240" style="overflow:visible"></svg>
+    <div style="font-size:.78rem;color:var(--tcb-muted)">Techcombank — Technology Stack (isometric view)</div>
+    <button class="replay-btn" onclick="replayIso()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 22 BLUEPRINT ════ -->
+<section class="comp" id="c22">
+  <div class="comp-label">Component 22</div>
+  <div class="comp-title">Blueprint-style Diagram</div>
+  <div class="comp-desc">Technical architecture diagram on dark blueprint grid. Dùng cho engineering presentations, system design slides.</div>
+  <div class="demo" style="background:#0a1628;border-color:#1e3a5f;padding:0;overflow:hidden">
+    <div style="position:relative;padding:1.5rem">
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(99,152,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(99,152,255,.06) 1px,transparent 1px);background-size:24px 24px"></div>
+      <svg id="bp22" viewBox="0 0 500 260" style="width:100%;position:relative;z-index:1;overflow:visible"></svg>
+    </div>
+    <button class="replay-btn" style="margin:0 1.5rem 1.25rem;border-color:#3b82f6;color:#3b82f6" onclick="replayBlueprint()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 23 MOTION PATH ════ -->
+<section class="comp" id="c23">
+  <div class="comp-label">Component 23</div>
+  <div class="comp-title">Motion Path Animation</div>
+  <div class="comp-desc">A dot travels along a curved SVG path through journey nodes. Dùng cho customer journey, product funnel slides.</div>
+  <div class="demo" style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+    <svg id="mp23" viewBox="0 0 500 200" style="width:100%;overflow:visible"></svg>
+    <div id="mpCap23" style="font-size:.8rem;color:var(--tcb-muted);text-align:center;max-width:400px;min-height:1.4em">Hành trình khách hàng từ nhận biết đến Premium</div>
+    <button class="replay-btn" onclick="replayMotion()">↺ Replay</button>
+  </div>
+</section>
+<hr class="div">
+
+<!-- ════ 24 PARTICLES ════ -->
+<section class="comp" id="c24">
+  <div class="comp-label">Component 24</div>
+  <div class="comp-title">Background Orbiting Particles</div>
+  <div class="comp-desc">Canvas particles orbiting a center point on a dark gradient. Dùng làm background cho cover slides hoặc AI showcase.</div>
+  <div class="demo" style="padding:0;overflow:hidden;border-radius:12px">
+    <div style="position:relative;background:linear-gradient(135deg,#0a0f1c 0%,#1b1564 50%,#0a0f1c 100%);height:260px;display:flex;align-items:center;justify-content:center;border-radius:12px;overflow:hidden">
+      <canvas id="pc24" style="position:absolute;inset:0"></canvas>
+      <div style="position:relative;z-index:2;text-align:center">
+        <div style="display:inline-block;background:rgba(237,27,36,.2);border:1px solid rgba(237,27,36,.4);color:#fca5a5;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:.75rem">AI-Powered</div>
+        <div style="font-size:clamp(1.4rem,3vw,2rem);font-weight:300;color:#fff;line-height:1.3">Techcombank<br><strong style="color:var(--tcb-red);font-weight:700">Intelligence</strong></div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.5rem">12.5M customers · real-time decisions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes spin{to{transform:rotate(360deg)}}
+.ag-node{display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.3;transform:scale(.92);transition:opacity .4s,transform .4s;flex-shrink:0;padding:0 .5rem}
+.ag-node.active{opacity:1;transform:scale(1)}
+.ag-node.done{opacity:.7;transform:scale(.95)}
+.ag-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:2px solid var(--tcb-line);background:var(--tcb-bg);transition:border-color .4s,background .4s,box-shadow .4s}
+.ag-node.active .ag-icon{border-color:var(--tcb-red);background:rgba(237,27,36,.08);animation:pulse-ag 1.4s ease-in-out infinite}
+.ag-node.done .ag-icon{border-color:var(--tcb-navy);background:rgba(27,21,100,.06)}
+@keyframes pulse-ag{0%,100%{box-shadow:0 0 0 6px rgba(237,27,36,.12)}50%{box-shadow:0 0 0 12px rgba(237,27,36,.04)}}
+.ag-lbl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tcb-muted);text-align:center;max-width:64px}
+.ag-node.active .ag-lbl{color:var(--tcb-red)}
+.ag-node.done .ag-lbl{color:var(--tcb-navy)}
+.ag-arrow{font-size:.9rem;color:var(--tcb-line);flex-shrink:0;padding:0 .2rem;margin-bottom:1.4rem;transition:color .4s}
+.ag-arrow.lit{color:var(--tcb-red)}
+</style>
+
+<script>
+/* ════ 10 TOKEN STREAM ════ */
+const tw10=[
+  {t:'Techcombank',hi:true},{t:' đang',hi:false},{t:' tiên',hi:false},{t:' phong',hi:false},{t:' trong',hi:false},
+  {t:' chuyển',hi:false},{t:' đổi',hi:false},{t:' số',hi:true},{t:'.',hi:false},{t:' Với',hi:false},
+  {t:' hơn',hi:false},{t:' 12',hi:true},{t:'.5M',hi:true},{t:' khách',hi:false},{t:' hàng',hi:false},
+  {t:' và nền',hi:false},{t:' tảng AI',hi:true},{t:' tiên tiến',hi:false},{t:',',hi:false},
+  {t:' chúng tôi',hi:false},{t:' định nghĩa',hi:false},{t:' lại',hi:false},{t:' ngân hàng',hi:false},{t:' tương lai',hi:true},{t:'.',hi:false}
+];
+let s10i=0,s10timer=null,s10start=null,s10cnt=0;
+function runStream10(){
+  s10i=0;s10cnt=0;s10start=null;
+  const out=document.getElementById('streamOut10');
+  const cur=document.getElementById('cur10');
+  while(out.firstChild&&out.firstChild!==cur)out.removeChild(out.firstChild);
+  streamStep10();
+}
+function streamStep10(){
+  if(s10i>=tw10.length)return;
+  if(!s10start)s10start=performance.now();
+  const w=tw10[s10i++];
+  const span=document.createElement('span');
+  span.textContent=w.t;
+  span.style.cssText=`opacity:0;animation:token-in .12s ease forwards;${w.hi?'color:#ed1b24':''}`;
+  document.getElementById('streamOut10').insertBefore(span,document.getElementById('cur10'));
+  s10cnt++;
+  const el=(performance.now()-s10start)/1000;
+  document.getElementById('tc10').textContent=s10cnt;
+  document.getElementById('ts10').textContent=Math.round(s10cnt/Math.max(el,.1));
+  s10timer=setTimeout(streamStep10,60+Math.random()*80);
+}
+function replayStream10(){clearTimeout(s10timer);runStream10();}
+const styleEl=document.createElement('style');
+styleEl.textContent='@keyframes token-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(styleEl);
+
+/* ════ 11 JARS ════ */
+function runJars(){
+  function anim(fillId,pctId,target){
+    document.getElementById(fillId).style.height=target+'%';
+    const s=performance.now();
+    (function t(now){const p=Math.min((now-s)/1600,1);const e=1-Math.pow(2,-10*p);
+      document.getElementById(pctId).textContent=Math.round(e*target)+'%';
+      if(p<1)requestAnimationFrame(t);})(s);
+  }
+  anim('fill11a','pct11a',76);anim('fill11b','pct11b',92);
+}
+function replayJars(){
+  ['fill11a','fill11b'].forEach(id=>{const el=document.getElementById(id);if(el){el.style.transition='none';el.style.height='0';}});
+  ['pct11a','pct11b'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='0%';});
+  setTimeout(()=>{
+    ['fill11a','fill11b'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.transition='height 1.6s cubic-bezier(0.16,1,0.3,1)';});
+    runJars();
+  },60);
+}
+
+/* ════ 12 AGENT STATUS ════ */
+const agStates=[
+  {icon:'💤',label:'Idle'},{icon:'🧠',label:'Planning'},{icon:'⚙️',label:'Executing'},{icon:'🔍',label:'Reviewing'},{icon:'✅',label:'Done'}
+];
+const agInfo=[
+  {t:'Initializing agent…',s:'Waiting for task'},
+  {t:'Planning approach…',s:'Analyzing context window · 12,450 tokens'},
+  {t:'Executing tools…',s:'read_file → grep → edit · 3 calls'},
+  {t:'Reviewing output…',s:'Checking correctness and edge cases'},
+  {t:'Task complete',s:'3 files modified · 0 errors · 4.2s'},
+];
+let ag12cur=0,ag12timer=null;
+function buildAgent12(){
+  const row=document.getElementById('agRow12');
+  if(row.children.length>0)return;
+  agStates.forEach((s,i)=>{
+    if(i>0){const a=document.createElement('div');a.className='ag-arrow';a.setAttribute('data-after',i-1);a.textContent='→';row.appendChild(a);}
+    const n=document.createElement('div');n.className='ag-node';n.setAttribute('data-i',i);
+    n.innerHTML=`<div class="ag-icon">${s.icon}</div><div class="ag-lbl">${s.label}</div>`;
+    row.appendChild(n);
+  });
+}
+function setAgent12(i){
+  buildAgent12();
+  document.querySelectorAll('#agRow12 .ag-node').forEach((n,j)=>{
+    n.classList.remove('active','done');
+    if(j===i)n.classList.add('active');
+    else if(j<i)n.classList.add('done');
+  });
+  document.querySelectorAll('#agRow12 .ag-arrow').forEach((a,j)=>a.classList.toggle('lit',j<i));
+  document.getElementById('st12').textContent=agInfo[i].t;
+  document.getElementById('ss12').textContent=agInfo[i].s;
+  if(i===agStates.length-1){const sp=document.getElementById('spin12');if(sp){sp.style.animation='none';sp.style.border='2px solid var(--tcb-navy)';}}
+}
+function runAgent12(){ag12cur=0;runAgentStep12();}
+function runAgentStep12(){setAgent12(ag12cur);if(ag12cur<agStates.length-1){ag12timer=setTimeout(()=>{ag12cur++;runAgentStep12();},ag12cur===0?600:1100);}}
+function replayAgent12(){clearTimeout(ag12timer);const sp=document.getElementById('spin12');if(sp){sp.style.animation='spin .8s linear infinite';sp.style.border='2px solid var(--tcb-line)';sp.style.borderTopColor='var(--tcb-red)';}runAgent12();}
+
+/* ════ 13 HEATMAP ════ */
+let hm13cells=[];
+function buildHeatmap(){
+  const grid=document.getElementById('hm13grid');
+  if(!grid)return;
+  grid.innerHTML='';hm13cells=[];let total=0;
+  for(let w=0;w<16;w++){
+    const col=document.createElement('div');
+    col.style.cssText='display:flex;flex-direction:column;gap:2px';
+    for(let d=0;d<7;d++){
+      const v=Math.random()<.15?0:Math.random()<.3?1:Math.random()<.55?2:Math.random()<.8?3:4;
+      total+=v*120;
+      const cell=document.createElement('div');
+      const colors=['#ebedf0','rgba(237,27,36,.2)','rgba(237,27,36,.4)','rgba(237,27,36,.65)','#ed1b24'];
+      cell.style.cssText=`width:12px;height:12px;border-radius:2px;background:${colors[v]};opacity:0;transform:scale(.6);transition:opacity .3s ease,transform .3s ease`;
+      col.appendChild(cell);hm13cells.push({el:cell,col:w,row:d});
+    }
+    grid.appendChild(col);
+  }
+  return total;
+}
+function runHeatmap(){
+  const total=buildHeatmap();
+  hm13cells.forEach(({el,col,row})=>setTimeout(()=>{el.style.opacity='1';el.style.transform='scale(1)'},(col+row)*18+100));
+  let n=0;const tick=setInterval(()=>{n=Math.min(n+Math.ceil(total/60),total);document.getElementById('hm13tot').textContent=n.toLocaleString('vi-VN');if(n>=total)clearInterval(tick);},30);
+}
+function replayHeatmap(){runHeatmap();}
+
+/* ════ 14 AUTONOMY SPECTRUM ════ */
+const specLevels=[
+  {pos:8, num:'L1',name:'Manual',desc:'Human does everything'},
+  {pos:30,num:'L2',name:'Copilot',desc:'AI suggests, human approves'},
+  {pos:52,num:'L3',name:'Supervised',desc:'AI acts, human reviews'},
+  {pos:74,num:'L4',name:'Delegated',desc:'AI runs, escalates edge cases'},
+  {pos:92,num:'L5',name:'Autonomous',desc:'AI self-directs end-to-end'},
+];
+function buildSpectrum(){
+  const c=document.getElementById('specCards14');
+  if(!c||c.children.length>0)return;
+  specLevels.forEach((l,i)=>{
+    const d=document.createElement('div');
+    d.setAttribute('data-idx',i);
+    d.style.cssText='padding:.75rem .6rem;border-radius:8px;border:1px solid var(--tcb-line);background:var(--tcb-bg);opacity:.4;transition:opacity .4s,border-color .4s,background .4s;cursor:pointer;font-size:.72rem';
+    d.innerHTML=`<div style="font-size:.65rem;font-weight:700;color:var(--tcb-red);letter-spacing:.08em;margin-bottom:.3rem">${l.num}</div><div style="font-weight:700;margin-bottom:.2rem">${l.name}</div><div style="color:var(--tcb-muted);font-size:.68rem;line-height:1.4">${l.desc}</div>`;
+    d.addEventListener('click',()=>setSpectrum(i));
+    c.appendChild(d);
+  });
+}
+function setSpectrum(i){
+  buildSpectrum();
+  document.getElementById('specDot14').style.left=specLevels[i].pos+'%';
+  [...document.getElementById('specCards14').children].forEach((c,j)=>{
+    c.style.opacity=j===i?'1':'.4';
+    c.style.borderColor=j===i?'var(--tcb-red)':'var(--tcb-line)';
+    c.style.background=j===i?'rgba(237,27,36,.04)':'var(--tcb-bg)';
+  });
+}
+let spec14step=0,spec14timer=null;
+function runSpectrum(){buildSpectrum();setSpectrum(0);spec14step=1;(function go(){setSpectrum(spec14step%5);if(spec14step<4){spec14step++;spec14timer=setTimeout(go,900);}})();}
+function replaySpectrum(){clearTimeout(spec14timer);spec14step=0;runSpectrum();}
+
+/* ════ 15 AGENTIC LOOP ════ */
+const loopNodes=[{x:150,y:60,icon:'🧠',lbl:'Plan'},{x:240,y:165,icon:'⚙️',lbl:'Act'},{x:150,y:250,icon:'🔍',lbl:'Observe'},{x:60,y:165,icon:'✏️',lbl:'Reflect'}];
+const loopInfo=[
+  {step:'Plan',desc:'Analyze task and form strategy'},
+  {step:'Act',desc:'Execute tools and write output'},
+  {step:'Observe',desc:'Inspect results and side-effects'},
+  {step:'Reflect',desc:'Update memory and re-plan'},
+];
+let loopCur=0,loopIter=1,loopTimer=null;
+let loopBuilt=false;
+function buildLoop(){
+  const svg=document.getElementById('loopSvg15');
+  if(loopBuilt||!svg)return;loopBuilt=true;
+  const ns='http://www.w3.org/2000/svg';
+  const defs=document.createElementNS(ns,'defs');
+  defs.innerHTML='<marker id="lpa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e3e4e6" id="lpaFill"/></marker>';
+  svg.appendChild(defs);
+  const arcs=[{i:0,j:1,d:'M 185,88 Q 230,150 185,212'},{i:1,j:2,d:'M 150,242 Q 90,242 75,195'},{i:2,j:3,d:'M 75,130 Q 75,80 115,68'},{i:3,j:0,d:'M 96,115 Q 110,68 116,68'}];
+  arcs.forEach(a=>{
+    const p=document.createElementNS(ns,'path');
+    p.setAttribute('id','la'+a.i+a.j);p.setAttribute('d',a.d);
+    p.setAttribute('fill','none');p.setAttribute('stroke','#e3e4e6');p.setAttribute('stroke-width','2');p.setAttribute('marker-end','url(#lpa)');
+    svg.appendChild(p);
+  });
+  loopNodes.forEach((n,i)=>{
+    const g=document.createElementNS(ns,'g');g.setAttribute('id','ln'+i);
+    const c=document.createElementNS(ns,'circle');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r','32');
+    c.setAttribute('fill','#f5f6f8');c.setAttribute('stroke','#e3e4e6');c.setAttribute('stroke-width','2');g.appendChild(c);
+    const t=document.createElementNS(ns,'text');t.setAttribute('x',n.x);t.setAttribute('y',n.y+2);
+    t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');t.setAttribute('font-size','18');t.textContent=n.icon;g.appendChild(t);
+    const l=document.createElementNS(ns,'text');l.setAttribute('x',n.x);l.setAttribute('y',n.y+46);
+    l.setAttribute('text-anchor','middle');l.setAttribute('font-family','Be Vietnam Pro,sans-serif');l.setAttribute('font-size','9.5');l.setAttribute('font-weight','700');l.setAttribute('text-transform','uppercase');l.setAttribute('fill','#a2a2a2');l.textContent=n.lbl;g.appendChild(l);
+    svg.appendChild(g);
+  });
+}
+function activateLoop(i){
+  buildLoop();
+  loopNodes.forEach((_,j)=>{
+    const g=document.getElementById('ln'+j);if(!g)return;
+    const c=g.querySelector('circle'),l=g.querySelectorAll('text')[1];
+    c.setAttribute('fill',j===i?'rgba(237,27,36,.08)':j<i?'rgba(27,21,100,.06)':'#f5f6f8');
+    c.setAttribute('stroke',j===i?'#ed1b24':j<i?'#1b1564':'#e3e4e6');
+    c.setAttribute('stroke-width',j===i?'2.5':'2');
+    if(l)l.setAttribute('fill',j===i?'#ed1b24':j<i?'#1b1564':'#a2a2a2');
+  });
+  [[0,1],[1,2],[2,3],[3,0]].forEach(([a,b],j)=>{
+    const p=document.getElementById('la'+a+b);if(!p)return;
+    const prev=(i-1+4)%4;const isLit=(a===prev&&b===i)||(i===0&&a===3&&b===0);
+    p.setAttribute('stroke',isLit?'#ed1b24':'#e3e4e6');
+  });
+  const s=loopInfo[i];
+  document.getElementById('ls15step').textContent=s.step;
+  document.getElementById('ls15desc').textContent=s.desc;
+  document.getElementById('ls15iter').textContent='iteration '+loopIter;
+}
+function runLoop(){loopCur=0;loopIter=1;(function step(){activateLoop(loopCur);loopCur=(loopCur+1)%4;if(loopCur===0)loopIter++;loopTimer=setTimeout(step,1100);})();}
+function replayLoop(){clearTimeout(loopTimer);loopCur=0;loopIter=1;runLoop();}
+
+/* ════ 16 TREND LINE ════ */
+const tld={digital:[22,24,25,28,29,33,35,38,40,42,45,48,50,54,57,62],branch:[48,46,47,44,45,43,42,41,40,39,38,36,35,33,32,30],partner:[12,13,14,13,15,16,17,18,17,19,20,21,22,23,25,26]};
+const tlColors={digital:'#ed1b24',branch:'#1b1564',partner:'#d6b973'};
+let lineBuilt=false;
+function buildLine(){
+  const svg=document.getElementById('lineSvg16');
+  if(!svg||lineBuilt)return;lineBuilt=true;
+  const W=560,H=200,PL=32,PR=12,PT=10,PB=28,cW=W-PL-PR,cH=H-PT-PB,maxV=65,weeks=16;
+  const ns='http://www.w3.org/2000/svg';
+  for(let i=0;i<=4;i++){
+    const y=PT+cH-(i/4)*cH;
+    const l=document.createElementNS(ns,'line');l.setAttribute('x1',PL);l.setAttribute('x2',W-PR);l.setAttribute('y1',y);l.setAttribute('y2',y);l.setAttribute('stroke','#e3e4e6');l.setAttribute('stroke-width','1');svg.appendChild(l);
+    const t=document.createElementNS(ns,'text');t.setAttribute('x',PL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');t.setAttribute('font-family','Be Vietnam Pro,sans-serif');t.setAttribute('font-size','9');t.setAttribute('fill','#a2a2a2');t.textContent=Math.round((i/4)*maxV);svg.appendChild(t);
+  }
+  const pts=(arr)=>arr.map((v,i)=>[PL+i*(cW/(weeks-1)),PT+cH-(v/maxV)*cH]);
+  Object.entries(tld).forEach(([key,arr])=>{
+    const p=pts(arr);
+    let d=`M ${p[0][0]},${p[0][1]}`;
+    for(let i=1;i<p.length;i++)d+=` L ${p[i][0]},${p[i][1]}`;
+    const path=document.createElementNS(ns,'path');
+    path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke',tlColors[key]);path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');
+    const len=path.getTotalLength()||500;
+    path.setAttribute('stroke-dasharray',len);path.setAttribute('stroke-dashoffset',len);
+    path.style.transition='stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1)';
+    svg.appendChild(path);
+    setTimeout(()=>path.setAttribute('stroke-dashoffset','0'),300);
+  });
+}
+function runLine(){buildLine();}
+function replayLine(){lineBuilt=false;const svg=document.getElementById('lineSvg16');if(svg)svg.innerHTML='';runLine();}
+
+/* ════ 17 DONUT MULTI ════ */
+const d17segs=[{label:'Tiền gửi',pct:38,color:'#ed1b24',val:'VND 4.8T'},{label:'Cho vay',pct:31,color:'#1b1564',val:'VND 3.9T'},{label:'Thanh toán',pct:18,color:'#d6b973',val:'VND 2.3T'},{label:'Đầu tư',pct:9,color:'#4361ee',val:'VND 1.1T'},{label:'Khác',pct:4,color:'#a2a2a2',val:'VND 0.5T'}];
+let d17built=false;
+function buildDonut17(){
+  const svg=document.getElementById('donut17svg'),leg=document.getElementById('leg17');
+  if(!svg||d17built)return;d17built=true;
+  const R=70,CX=90,CY=90,C=2*Math.PI*R;
+  const ns='http://www.w3.org/2000/svg';
+  svg.innerHTML=`<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="#f0f0f0" stroke-width="18"/>`;
+  let offset=0;
+  d17segs.forEach(s=>{
+    const len=(s.pct/100)*C;
+    const c=document.createElementNS(ns,'circle');
+    c.setAttribute('cx',CX);c.setAttribute('cy',CY);c.setAttribute('r',R);
+    c.setAttribute('fill','none');c.setAttribute('stroke',s.color);c.setAttribute('stroke-width','18');c.setAttribute('stroke-linecap','butt');
+    c.style.cssText=`transform-origin:center;transform:rotate(-90deg);stroke-dasharray:0 ${C};stroke-dashoffset:${-offset};transition:stroke-dasharray 1.2s cubic-bezier(0.16,1,0.3,1)`;
+    c.setAttribute('data-len',len);c.setAttribute('data-c',C);
+    svg.appendChild(c);
+    offset+=len;
+    if(leg){const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--tcb-line);font-family:Be Vietnam Pro,sans-serif';row.innerHTML=`<div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:${s.color}"></div><span style="flex:1;font-size:.82rem;font-weight:500">${s.label}</span><span style="font-size:.82rem;font-weight:700;color:${s.color}">${s.pct}%</span><span style="font-size:.72rem;color:var(--tcb-muted)">${s.val}</span>`;leg.appendChild(row);}
+  });
+}
+function runDonut17(){
+  buildDonut17();
+  document.querySelectorAll('#donut17svg circle[data-len]').forEach(c=>{
+    const len=parseFloat(c.getAttribute('data-len')),C=parseFloat(c.getAttribute('data-c'));
+    setTimeout(()=>c.style.strokeDasharray=`${len-1} ${C-len+1}`,300);
+  });
+}
+function replayDonut17(){d17built=false;const l=document.getElementById('leg17');if(l)l.innerHTML='';runDonut17();}
+
+/* ════ 18 HBAR ════ */
+const hb18data=[{label:'Hà Nội',pct:88,color:'#ed1b24'},{label:'TP.HCM',pct:82,color:'#1b1564'},{label:'Đà Nẵng',pct:61,color:'#4361ee'},{label:'Cần Thơ',pct:47,color:'#d6b973'},{label:'Hải Phòng',pct:38,color:'#a2a2a2'}];
+function buildHbar(){
+  const c=document.getElementById('hbar18');if(!c||c.children.length>0)return;
+  hb18data.forEach(d=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:.75rem';
+    row.innerHTML=`<div style="width:110px;font-size:.82rem;font-weight:600;text-align:right;flex-shrink:0">${d.label}</div>
+      <div style="flex:1;height:28px;background:var(--tcb-bg);border-radius:6px;overflow:hidden">
+        <div data-w="${d.pct}" style="height:100%;width:0;border-radius:6px;background:${d.color};display:flex;align-items:center;padding-left:.75rem;transition:width 1.2s cubic-bezier(0.16,1,0.3,1)">
+          <span style="font-size:.72rem;font-weight:700;color:#fff;opacity:0;transition:opacity .3s ease .9s">${d.pct}%</span>
+        </div>
+      </div>
+      <div style="width:42px;font-size:.82rem;font-weight:700;color:${d.color};text-align:right">${d.pct}%</div>`;
+    c.appendChild(row);
+  });
+}
+function runHbar(){
+  buildHbar();
+  [...document.querySelectorAll('#hbar18 [data-w]')].forEach((f,i)=>{
+    setTimeout(()=>{f.style.width=f.dataset.w+'%';f.querySelector('span').style.opacity='1';},i*120+300);
+  });
+}
+function replayHbar(){
+  document.querySelectorAll('#hbar18 [data-w]').forEach(f=>{f.style.transition='none';f.style.width='0';f.querySelector('span').style.opacity='0';});
+  setTimeout(()=>{document.querySelectorAll('#hbar18 [data-w]').forEach(f=>{f.style.transition='width 1.2s cubic-bezier(0.16,1,0.3,1)';});runHbar();},60);
+}
+
+/* ════ 19 RADAR ════ */
+const r19axes=['NPS','Tăng trưởng','Bảo mật','Hiệu quả','Digital','Hài lòng'];
+const r19A=[0.88,0.75,0.92,0.68,0.85,0.90],r19B=[0.72,0.60,0.78,0.55,0.68,0.74];
+let r19built=false;
+function buildRadar(){
+  const svg=document.getElementById('radar19'),leg=document.getElementById('radarLeg19');
+  if(!svg||r19built)return;r19built=true;
+  const ns='http://www.w3.org/2000/svg',A=r19axes.length,CX=120,CY=120,R=82;
+  const pt=(i,r)=>[CX+r*Math.cos((2*Math.PI*i/A)-Math.PI/2),CY+r*Math.sin((2*Math.PI*i/A)-Math.PI/2)];
+  [.25,.5,.75,1].forEach(f=>{
+    const p=r19axes.map((_,i)=>pt(i,R*f)).map(p=>p.join(',')).join(' ');
+    const poly=document.createElementNS(ns,'polygon');poly.setAttribute('points',p);poly.setAttribute('fill','none');poly.setAttribute('stroke','#e3e4e6');poly.setAttribute('stroke-width','1');svg.appendChild(poly);
+  });
+  r19axes.forEach((_,i)=>{const[x,y]=pt(i,R);const l=document.createElementNS(ns,'line');l.setAttribute('x1',CX);l.setAttribute('y1',CY);l.setAttribute('x2',x);l.setAttribute('y2',y);l.setAttribute('stroke','#e3e4e6');l.setAttribute('stroke-width','1');svg.appendChild(l);});
+  [{d:r19B,color:'#1b1564'},{d:r19A,color:'#ed1b24'}].forEach(({d,color})=>{
+    const pts=d.map((v,i)=>pt(i,R*v)).map(p=>p.join(',')).join(' ');
+    const poly=document.createElementNS(ns,'polygon');poly.setAttribute('points',pts);
+    poly.setAttribute('fill',color);poly.setAttribute('fill-opacity','.12');poly.setAttribute('stroke',color);poly.setAttribute('stroke-width','2');poly.setAttribute('stroke-linejoin','round');
+    const C=300;poly.setAttribute('stroke-dasharray',C);poly.setAttribute('stroke-dashoffset',C);
+    poly.style.transition='stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1)';
+    svg.appendChild(poly);
+  });
+  r19axes.forEach((lbl,i)=>{const[x,y]=pt(i,R+18);const t=document.createElementNS(ns,'text');t.setAttribute('x',x);t.setAttribute('y',y+3);t.setAttribute('text-anchor','middle');t.setAttribute('font-family','Be Vietnam Pro,sans-serif');t.setAttribute('font-size','9.5');t.setAttribute('font-weight','700');t.setAttribute('fill','#616161');t.textContent=lbl;svg.appendChild(t);
+    if(leg){const row=document.createElement('div');row.style.cssText='font-size:.7rem;color:var(--tcb-muted)';row.textContent=`${lbl}: ${Math.round(r19A[i]*100)}% vs ${Math.round(r19B[i]*100)}%`;leg.appendChild(row);}
+  });
+}
+function runRadar(){buildRadar();setTimeout(()=>document.querySelectorAll('#radar19 polygon[stroke]').forEach(p=>p.setAttribute('stroke-dashoffset','0')),300);}
+function replayRadar(){r19built=false;const svg=document.getElementById('radar19');if(svg)svg.innerHTML='';const l=document.getElementById('radarLeg19');if(l)l.innerHTML='';runRadar();}
+
+/* ════ 20 TERMINAL ════ */
+const termLines=[
+  {t:'prompt',text:'claude run --task "analyze Q2 performance" --model sonnet-4-6'},
+  {t:'comment',text:'# Initializing agent…',color:'#8b949e'},
+  {t:'out',text:'✦ Reading: reports/q2-2024.csv  [4,821 rows]',color:'#4361ee'},
+  {t:'out',text:'✦ Reading: targets/q2-targets.json',color:'#4361ee'},
+  {t:'blank',text:''},
+  {t:'out',text:'Analysis complete. Summary:',color:'#c9d1d9'},
+  {t:'out',text:'  ✓ Revenue:   VND 8.7T (+14.2% YoY)',color:'#39d353'},
+  {t:'out',text:'  ✓ Customers: 12.5M  (+8.3% QoQ)',color:'#39d353'},
+  {t:'out',text:'  ⚠ NPS Score: 74     (target: 80)',color:'#d6b973'},
+  {t:'out',text:'  ✗ Churn:     3.2%   (above 2.5%)',color:'#ed1b24'},
+  {t:'blank',text:''},
+  {t:'out',text:'Recommendation: Focus retention on segment C.',color:'#c9d1d9'},
+  {t:'done',text:''},
+];
+let term20i=0,term20timer=null;
+function runTerminal(){
+  term20i=0;
+  const body=document.getElementById('term20');
+  if(!body)return;
+  const cur=document.getElementById('tcur20');
+  while(body.firstChild&&body.firstChild!==cur)body.removeChild(body.firstChild);
+  termStep20();
+}
+function termAddLine(html){
+  const s=document.createElement('div');s.style.cssText='font-size:.82rem;line-height:1.7;white-space:pre';
+  s.innerHTML=html;
+  const body=document.getElementById('term20'),cur=document.getElementById('tcur20');
+  if(body&&cur)body.insertBefore(s,cur);
+  return s;
+}
+function termStep20(){
+  if(term20i>=termLines.length)return;
+  const l=termLines[term20i++];
+  if(l.t==='prompt'){
+    const row=termAddLine(`<span style="color:#39d353">❯ </span><span style="color:#e6edf3" id="tcmd20"></span>`);
+    let ci=0;(function type(){if(ci<l.text.length){document.getElementById('tcmd20').textContent+=l.text[ci++];term20timer=setTimeout(type,28);}else term20timer=setTimeout(termStep20,350);})();
+  } else if(l.t==='blank'){termAddLine('');setTimeout(termStep20,80);}
+  else if(l.t==='done'){termAddLine(`<span style="color:#39d353">❯ </span>`);}
+  else{termAddLine(`<span style="color:${l.color||'#c9d1d9'}">${l.text}</span>`);term20timer=setTimeout(termStep20,110);}
+}
+function replayTerminal(){clearTimeout(term20timer);runTerminal();}
+
+/* ════ 21 ISOMETRIC ════ */
+const isoCubes=[
+  {cx:170,cy:100,w:60,h:20,top:'#ed1b24',left:'#b5141a',right:'#8a0f13',label:'AI Layer',delay:0},
+  {cx:110,cy:130,w:60,h:30,top:'#1b1564',left:'#131040',right:'#0d0b2e',label:'API',delay:80},
+  {cx:230,cy:130,w:60,h:30,top:'#1b1564',left:'#131040',right:'#0d0b2e',label:'Gateway',delay:160},
+  {cx:110,cy:175,w:60,h:40,top:'#4361ee',left:'#2e44b5',right:'#1f2f8a',label:'Services',delay:240},
+  {cx:230,cy:175,w:60,h:40,top:'#4361ee',left:'#2e44b5',right:'#1f2f8a',label:'Services',delay:320},
+  {cx:50,cy:175,w:60,h:50,top:'#d6b973',left:'#a88c45',right:'#7d6730',label:'Data',delay:400},
+  {cx:290,cy:175,w:60,h:50,top:'#d6b973',left:'#a88c45',right:'#7d6730',label:'Storage',delay:480},
+  {cx:170,cy:215,w:60,h:55,top:'#212121',left:'#0a0a0a',right:'#161616',label:'Infra',delay:560},
+];
+function isoFaces(cx,cy,w,h){
+  const tx=w/2,ty=w/4;
+  return {
+    top:`${cx},${cy-ty} ${cx+tx},${cy} ${cx},${cy+ty} ${cx-tx},${cy}`,
+    left:`${cx-tx},${cy} ${cx},${cy+ty} ${cx},${cy+ty+h} ${cx-tx},${cy+h}`,
+    right:`${cx+tx},${cy} ${cx},${cy+ty} ${cx},${cy+ty+h} ${cx+tx},${cy+h}`,
+  };
+}
+let isoBuilt=false;
+function buildIso(){
+  const svg=document.getElementById('iso21');if(!svg||isoBuilt)return;isoBuilt=true;
+  const ns='http://www.w3.org/2000/svg';
+  isoCubes.forEach(c=>{
+    const f=isoFaces(c.cx,c.cy,c.w,c.h);
+    const g=document.createElementNS(ns,'g');g.style.cssText='opacity:0;transform:translateY(12px);transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1)';
+    ['right','left','top'].forEach(face=>{
+      const p=document.createElementNS(ns,'polygon');p.setAttribute('points',f[face]);p.setAttribute('fill',c[face]);p.setAttribute('stroke','rgba(255,255,255,.08)');p.setAttribute('stroke-width','1');g.appendChild(p);
+    });
+    const t=document.createElementNS(ns,'text');t.setAttribute('x',c.cx);t.setAttribute('y',c.cy);t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');t.setAttribute('font-family','Be Vietnam Pro,sans-serif');t.setAttribute('font-size','8');t.setAttribute('font-weight','700');t.setAttribute('fill','#fff');t.textContent=c.label;g.appendChild(t);
+    svg.appendChild(g);
+    setTimeout(()=>{g.style.opacity='1';g.style.transform='translateY(0)';},c.delay+200);
+  });
+}
+function runIso(){buildIso();}
+function replayIso(){isoBuilt=false;const svg=document.getElementById('iso21');if(svg)svg.innerHTML='';runIso();}
+
+/* ════ 22 BLUEPRINT ════ */
+let bp22built=false;
+function buildBlueprint(){
+  const svg=document.getElementById('bp22');if(!svg||bp22built)return;bp22built=true;
+  const ns='http://www.w3.org/2000/svg';
+  const defs=document.createElementNS(ns,'defs');
+  defs.innerHTML='<marker id="bpa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/></marker>';
+  svg.appendChild(defs);
+  const box=(x,y,w,h,stroke='#3b82f6')=>{const r=document.createElementNS(ns,'rect');r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',w);r.setAttribute('height',h);r.setAttribute('fill','rgba(99,152,255,.06)');r.setAttribute('stroke',stroke);r.setAttribute('stroke-width','1.5');r.setAttribute('rx','4');return r;};
+  const txt=(x,y,text,size=10,color='#93c5fd',weight='400')=>{const t=document.createElementNS(ns,'text');t.setAttribute('x',x);t.setAttribute('y',y);t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','middle');t.setAttribute('font-family','JetBrains Mono,monospace');t.setAttribute('font-size',size);t.setAttribute('fill',color);t.setAttribute('font-weight',weight);t.textContent=text;return t;};
+  const arr=(x1,y1,x2,y2)=>{const l=document.createElementNS(ns,'line');l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);l.setAttribute('stroke','#3b82f6');l.setAttribute('stroke-width','1.5');l.setAttribute('marker-end','url(#bpa)');return l;};
+  const nodes=[
+    [svg.appendChild(box(10,32,100,36)),svg.appendChild(txt(60,53,'Mobile App',9,'#60a5fa','700'))],
+    [svg.appendChild(box(120,32,100,36)),svg.appendChild(txt(170,53,'Web Portal',9,'#60a5fa','700'))],
+    [svg.appendChild(box(10,95,210,30,'#ed1b24')),svg.appendChild(txt(115,113,'API Gateway · Auth',9,'#fca5a5','700'))],
+    [svg.appendChild(box(10,145,90,34)),svg.appendChild(txt(55,165,'Banking Core',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(110,145,90,34)),svg.appendChild(txt(155,165,'Payments',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(210,145,90,34)),svg.appendChild(txt(255,165,'AI Engine',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(310,145,90,34)),svg.appendChild(txt(355,165,'Notifications',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(310,32,180,110,'#d6b973')),svg.appendChild(txt(400,52,'AI / ML Platform',10,'#fde68a','700'))],
+    [svg.appendChild(box(10,200,120,30)),svg.appendChild(txt(70,218,'PostgreSQL',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(140,200,80,30)),svg.appendChild(txt(180,218,'Redis',8.5,'#60a5fa','700'))],
+    [svg.appendChild(box(230,200,80,30)),svg.appendChild(txt(270,218,'Kafka',8.5,'#60a5fa','700'))],
+  ];
+  // arrows
+  [arr(60,68,60,95),arr(170,68,170,95),arr(55,125,55,145),arr(155,125,155,145),arr(255,125,255,145),arr(355,125,355,145),arr(55,179,55,200),arr(155,179,175,200),arr(255,179,265,200)].forEach(a=>svg.appendChild(a));
+  nodes.flat().forEach((el,i)=>{
+    if(!el)return;el.style.opacity='0';el.style.transition='opacity .35s ease';
+    setTimeout(()=>{el.style.opacity='1';},i*30+200);
+  });
+}
+function runBlueprint(){buildBlueprint();}
+function replayBlueprint(){bp22built=false;const svg=document.getElementById('bp22');if(svg)svg.innerHTML='';runBlueprint();}
+
+/* ════ 23 MOTION PATH ════ */
+const mpNodes=[
+  {x:40,y:100,label:'Nhận biết',sub:'Awareness',activeColor:'rgba(237,27,36,.08)'},
+  {x:140,y:60,label:'Tìm hiểu',sub:'Interest',activeColor:'rgba(237,27,36,.08)'},
+  {x:240,y:110,label:'Đăng ký',sub:'Onboard',activeColor:'rgba(237,27,36,.08)'},
+  {x:340,y:55,label:'Giao dịch',sub:'Transact',activeColor:'rgba(237,27,36,.08)'},
+  {x:460,y:100,label:'Premium',sub:'Loyalty',activeColor:'rgba(214,185,115,.2)'},
+];
+const mpCaptions=['Khách hàng nhận biết Techcombank qua quảng cáo','Tìm hiểu sản phẩm trên website và app','Đăng ký tài khoản trong 5 phút','Thực hiện giao dịch đầu tiên','Trở thành khách hàng Premium ⭐'];
+let mp23built=false,mp23step=0,mp23path=null;
+function buildMotion(){
+  const svg=document.getElementById('mp23');if(!svg||mp23built)return;mp23built=true;
+  const ns='http://www.w3.org/2000/svg';
+  const pts=mpNodes.map(n=>[n.x,n.y]);
+  let d=`M ${pts[0]}`;
+  for(let i=1;i<pts.length;i++){const cx=(pts[i-1][0]+pts[i][0])/2;d+=` C ${cx},${pts[i-1][1]} ${cx},${pts[i][1]} ${pts[i][0]},${pts[i][1]}`;}
+  mp23path=document.createElementNS(ns,'path');mp23path.setAttribute('d',d);mp23path.setAttribute('fill','none');mp23path.setAttribute('stroke','#e3e4e6');mp23path.setAttribute('stroke-width','2');mp23path.setAttribute('stroke-dasharray','6 4');svg.appendChild(mp23path);
+  mpNodes.forEach((n,i)=>{
+    const g=document.createElementNS(ns,'g');g.setAttribute('id','mpn23_'+i);
+    const c=document.createElementNS(ns,'circle');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r','22');c.setAttribute('fill','#f5f6f8');c.setAttribute('stroke','#e3e4e6');c.setAttribute('stroke-width','2');g.appendChild(c);
+    const t=document.createElementNS(ns,'text');t.setAttribute('x',n.x);t.setAttribute('y',n.y-2);t.setAttribute('text-anchor','middle');t.setAttribute('font-family','Be Vietnam Pro,sans-serif');t.setAttribute('font-size','9.5');t.setAttribute('font-weight','700');t.setAttribute('fill','#a2a2a2');t.textContent=n.label;g.appendChild(t);
+    const s=document.createElementNS(ns,'text');s.setAttribute('x',n.x);s.setAttribute('y',n.y+11);s.setAttribute('text-anchor','middle');s.setAttribute('font-family','Be Vietnam Pro,sans-serif');s.setAttribute('font-size','8');s.setAttribute('fill','#a2a2a2');s.textContent=n.sub;g.appendChild(s);
+    svg.appendChild(g);
+  });
+  const trav=document.createElementNS(ns,'circle');trav.setAttribute('r','9');trav.setAttribute('fill','#ed1b24');trav.setAttribute('filter','url(#tglow)');trav.setAttribute('id','trav23');
+  const defs=document.createElementNS(ns,'defs');defs.innerHTML='<filter id="tglow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg.insertBefore(defs,svg.firstChild);svg.appendChild(trav);
+  const sp=mp23path.getPointAtLength(0);trav.setAttribute('cx',sp.x);trav.setAttribute('cy',sp.y);
+}
+function highlightMpNode(i){
+  mpNodes.forEach((_,j)=>{
+    const g=document.getElementById('mpn23_'+j);if(!g)return;
+    const c=g.querySelector('circle'),ts=g.querySelectorAll('text');
+    const isActive=j===i,isDone=j<i;
+    c.setAttribute('fill',isActive?mpNodes[j].activeColor:isDone?'rgba(27,21,100,.05)':'#f5f6f8');
+    c.setAttribute('stroke',isActive?'#ed1b24':isDone?'#1b1564':'#e3e4e6');
+    if(ts[0])ts[0].setAttribute('fill',isActive?'#ed1b24':isDone?'#1b1564':'#a2a2a2');
+    if(ts[1])ts[1].setAttribute('fill',isActive?'#616161':isDone?'#a2a2a2':'#a2a2a2');
+  });
+  const cap=document.getElementById('mpCap23');if(cap)cap.textContent=mpCaptions[i];
+}
+function runMotion(){
+  buildMotion();mp23step=0;
+  const totalLen=mp23path?mp23path.getTotalLength():500;
+  const nodePcts=mpNodes.map(n=>{let best=0,bd=Infinity;for(let t=0;t<=1;t+=.002){const p=mp23path.getPointAtLength(t*totalLen);const d=Math.hypot(p.x-n.x,p.y-n.y);if(d<bd){bd=d;best=t;}}return best;});
+  let prog=0;
+  function moveNext(){
+    if(mp23step>=mpNodes.length)return;
+    const target=nodePcts[mp23step];const start=prog;const dur=900;const t0=performance.now();
+    (function tick(now){
+      const p=Math.min((now-t0)/dur,1),e=1-Math.pow(2,-10*p);
+      prog=start+(target-start)*e;
+      const pt=mp23path.getPointAtLength(prog*totalLen);
+      const trav=document.getElementById('trav23');if(trav){trav.setAttribute('cx',pt.x);trav.setAttribute('cy',pt.y);}
+      if(p<1)requestAnimationFrame(tick);
+      else{highlightMpNode(mp23step);mp23step++;if(mp23step<mpNodes.length)setTimeout(moveNext,700);}
+    })(t0);
+  }
+  setTimeout(moveNext,400);
+}
+function replayMotion(){mp23built=false;mp23step=0;const svg=document.getElementById('mp23');if(svg)svg.innerHTML='';runMotion();}
+
+/* ════ 24 PARTICLES ════ */
+let pc24anim=null;
+function runParticles(){
+  const canvas=document.getElementById('pc24');if(!canvas)return;
+  const stage=canvas.parentElement;canvas.width=stage.offsetWidth;canvas.height=stage.offsetHeight;
+  const ctx=canvas.getContext('2d');
+  const CX=()=>canvas.width/2,CY=()=>canvas.height/2;
+  const particles=[];
+  [[70,.008,6,'rgba(237,27,36,'],[105,.005,10,'rgba(214,185,115,'],[140,.003,14,'rgba(99,152,255,']].forEach(([r,spd,cnt,col])=>{
+    for(let i=0;i<cnt;i++){const angle=2*Math.PI*i/cnt;particles.push({r,angle,speed:spd*(Math.random()>.5?1:-1),size:1.5+Math.random()*2,color:col,alpha:.3+Math.random()*.5});}
+  });
+  for(let i=0;i<40;i++)particles.push({r:20+Math.random()*160,angle:Math.random()*2*Math.PI,speed:(Math.random()-.5)*.003,size:.5+Math.random(),color:'rgba(255,255,255,',alpha:.1+Math.random()*.2});
+  if(pc24anim)cancelAnimationFrame(pc24anim);
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx=CX(),cy=CY();
+    [[70],[105],[140]].forEach(([r])=>{ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.stroke();});
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,60);g.addColorStop(0,'rgba(237,27,36,.15)');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{p.angle+=p.speed;const x=cx+p.r*Math.cos(p.angle),y=cy+p.r*Math.sin(p.angle);ctx.beginPath();ctx.arc(x,y,p.size,0,2*Math.PI);ctx.fillStyle=p.color+p.alpha+')';ctx.fill();});
+    pc24anim=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/* ════ EXTEND SCROLL TRIGGER ════ */
+const triggered2=new Set();
+const obs2=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting||triggered2.has(e.target.id))return;
+    triggered2.add(e.target.id);
+    const id=e.target.id;
+    if(id==='c10')runStream10();
+    if(id==='c11')runJars();
+    if(id==='c12'){buildAgent12();setTimeout(runAgent12,200);}
+    if(id==='c13')runHeatmap();
+    if(id==='c14'){buildSpectrum();setTimeout(runSpectrum,200);}
+    if(id==='c15'){buildLoop();setTimeout(runLoop,200);}
+    if(id==='c16')runLine();
+    if(id==='c17')runDonut17();
+    if(id==='c18')runHbar();
+    if(id==='c19')runRadar();
+    if(id==='c20')runTerminal();
+    if(id==='c21')runIso();
+    if(id==='c22')runBlueprint();
+    if(id==='c23')runMotion();
+    if(id==='c24')runParticles();
+  });
+},{threshold:0.2});
+document.querySelectorAll('.comp').forEach(s=>obs2.observe(s));
 document.querySelectorAll('.comp').forEach(s=>navObs.observe(s));
 </script>
 </body>

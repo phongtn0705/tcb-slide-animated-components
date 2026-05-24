@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>21 · Isometric Geometric Visual</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.iso-scene {
+  display:flex; flex-direction:column; align-items:center; gap:1.5rem;
+}
+svg.iso-svg { overflow:visible; }
+
+.cube-top   { transition:fill .4s; }
+.cube-left  { transition:fill .4s; }
+.cube-right { transition:fill .4s; }
+.cube-group {
+  opacity:0; transform:translateY(12px);
+  transition:opacity .5s cubic-bezier(0.16,1,0.3,1), transform .5s cubic-bezier(0.16,1,0.3,1);
+}
+.cube-group.vis { opacity:1; transform:translateY(0); }
+.cube-group:hover .cube-top   { filter:brightness(1.1); }
+.cube-group:hover .cube-left  { filter:brightness(1.05); }
+.cube-group:hover .cube-right { filter:brightness(.9); }
+
+.iso-label {
+  font-family:'Be Vietnam Pro',sans-serif;
+  font-size:8px; font-weight:700; fill:#fff;
+  text-anchor:middle; dominant-baseline:middle;
+  pointer-events:none;
+}
+.iso-caption { font-size:.78rem; color:#616161; text-align:center; max-width:300px; }
+</style>
+</head>
+<body>
+<div class="iso-scene">
+<svg class="iso-svg" width="340" height="240" viewBox="0 0 340 240" id="isoSvg"></svg>
+<div class="iso-caption">Techcombank — Technology Stack (isometric view)</div>
+</div>
+
+<script>
+const svg = document.getElementById('isoSvg');
+
+// Isometric cube helper
+// cx,cy = center of top face; w=width, h=height of cube
+function isoPath(cx, cy, w, h) {
+  // top: diamond
+  const tx = w/2, ty = w/4;
+  const top = `${cx},${cy-ty} ${cx+tx},${cy} ${cx},${cy+ty} ${cx-tx},${cy}`;
+  // left face
+  const left = `${cx-tx},${cy} ${cx},${cy+ty} ${cx},${cy+ty+h} ${cx-tx},${cy+h}`;
+  // right face
+  const right = `${cx+tx},${cy} ${cx},${cy+ty} ${cx},${cy+ty+h} ${cx+tx},${cy+h}`;
+  return {top,left,right};
+}
+
+const cubes = [
+  // col, row, height, colors[top,left,right], label
+  {cx:170,cy:100,w:60,h:20,top:'#ed1b24',left:'#b5141a',right:'#8a0f13',label:'AI Layer',  delay:0},
+  {cx:110,cy:130,w:60,h:30,top:'#1b1564',left:'#131040',right:'#0d0b2e',label:'API',       delay:80},
+  {cx:230,cy:130,w:60,h:30,top:'#1b1564',left:'#131040',right:'#0d0b2e',label:'Gateway',   delay:160},
+  {cx:110,cy:170,w:60,h:40,top:'#4361ee',left:'#2e44b5',right:'#1f2f8a',label:'Services',  delay:240},
+  {cx:230,cy:170,w:60,h:40,top:'#4361ee',left:'#2e44b5',right:'#1f2f8a',label:'Services',  delay:320},
+  {cx:50, cy:170,w:60,h:50,top:'#d6b973',left:'#a88c45',right:'#7d6730',label:'Data',      delay:400},
+  {cx:290,cy:170,w:60,h:50,top:'#d6b973',left:'#a88c45',right:'#7d6730',label:'Storage',   delay:480},
+  {cx:170,cy:210,w:60,h:55,top:'#212121',left:'#0a0a0a',right:'#161616',label:'Infra',     delay:560},
+];
+
+cubes.forEach(c => {
+  const p = isoPath(c.cx, c.cy, c.w, c.h);
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','cube-group');
+
+  ['right','left','top'].forEach(face => {
+    const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points', p[face]);
+    poly.setAttribute('class',`cube-${face}`);
+    poly.setAttribute('fill', c[face]);
+    poly.setAttribute('stroke','rgba(255,255,255,.08)');
+    poly.setAttribute('stroke-width','1');
+    g.appendChild(poly);
+  });
+
+  const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+  txt.setAttribute('x', c.cx);
+  txt.setAttribute('y', c.cy);
+  txt.setAttribute('class','iso-label');
+  txt.textContent = c.label;
+  g.appendChild(txt);
+
+  svg.appendChild(g);
+  setTimeout(() => g.classList.add('vis'), c.delay + 200);
+});
+</script>
+</body>
+</html>

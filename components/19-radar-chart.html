@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>19 · Radar Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.radar-wrap { display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap; }
+.radar-legend { display:flex; flex-direction:column; gap:.6rem; }
+.rleg { display:flex; align-items:center; gap:.5rem; font-size:.8rem; }
+.rleg-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
+.radar-label-svg { font-family:'Be Vietnam Pro',sans-serif; font-size:9.5px; font-weight:600; fill:#616161; text-anchor:middle; }
+.grid-poly { fill:none; stroke:#e3e4e6; stroke-width:1; }
+.axis-line  { stroke:#e3e4e6; stroke-width:1; }
+.data-poly  {
+  fill-opacity:.12; stroke-width:2;
+  stroke-linejoin:round;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+}
+.data-poly-a { fill:#ed1b24; stroke:#ed1b24; stroke-dasharray:300; stroke-dashoffset:300; transition:stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1); }
+.data-poly-b { fill:#1b1564; stroke:#1b1564; stroke-dasharray:300; stroke-dashoffset:300; transition:stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1) .2s; }
+</style>
+</head>
+<body>
+<div class="radar-wrap">
+  <svg id="radarSvg" width="240" height="240" viewBox="0 0 240 240"></svg>
+  <div class="radar-legend">
+    <div style="font-size:.75rem;font-weight:700;color:#212121;margin-bottom:.25rem">KPI so sánh</div>
+    <div class="rleg"><div class="rleg-dot" style="background:#ed1b24"></div>Năm 2024</div>
+    <div class="rleg"><div class="rleg-dot" style="background:#1b1564"></div>Năm 2023</div>
+    <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:.35rem;" id="axisLegend"></div>
+  </div>
+</div>
+
+<script>
+const axes=['NPS','Tăng trưởng','Bảo mật','Hiệu quả','Digital','Hài lòng'];
+const A=axes.length, CX=120, CY=120, R=85;
+const dataA=[0.88,0.75,0.92,0.68,0.85,0.90]; // 2024
+const dataB=[0.72,0.60,0.78,0.55,0.68,0.74]; // 2023
+
+const svg=document.getElementById('radarSvg');
+function pt(i,r){
+  const a=(2*Math.PI*i/A)-Math.PI/2;
+  return [CX+r*Math.cos(a),CY+r*Math.sin(a)];
+}
+
+// grid rings
+[.25,.5,.75,1].forEach(f=>{
+  const pts=axes.map((_,i)=>pt(i,R*f));
+  const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  poly.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+  poly.setAttribute('class','grid-poly');
+  svg.appendChild(poly);
+});
+
+// axis lines
+axes.forEach((_,i)=>{
+  const [x,y]=pt(i,R);
+  const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1',CX);l.setAttribute('y1',CY);
+  l.setAttribute('x2',x);l.setAttribute('y2',y);
+  l.setAttribute('class','axis-line');
+  svg.appendChild(l);
+});
+
+// data polygons
+[{d:dataB,cls:'data-poly data-poly-b'},{d:dataA,cls:'data-poly data-poly-a'}].forEach(({d,cls})=>{
+  const pts=d.map((v,i)=>pt(i,R*v));
+  const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  poly.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+  poly.setAttribute('class',cls);
+  svg.appendChild(poly);
+});
+
+// labels
+axes.forEach((lbl,i)=>{
+  const [x,y]=pt(i,R+18);
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',x);t.setAttribute('y',y+3);
+  t.setAttribute('class','radar-label-svg');
+  t.textContent=lbl;
+  svg.appendChild(t);
+  // legend values
+  const row=document.createElement('div');
+  row.style.cssText='font-size:.7rem;color:#a2a2a2';
+  row.textContent=`${lbl}: ${Math.round(dataA[i]*100)}% vs ${Math.round(dataB[i]*100)}%`;
+  document.getElementById('axisLegend').appendChild(row);
+});
+
+setTimeout(()=>{
+  document.querySelectorAll('.data-poly-a,.data-poly-b').forEach(p=>p.style.strokeDashoffset='0');
+},300);
+</script>
+</body>
+</html>

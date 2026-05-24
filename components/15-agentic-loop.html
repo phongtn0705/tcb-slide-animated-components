@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>15 · Agentic Loop</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.loop-stage {
+  display:flex; flex-direction:column; align-items:center; gap:1.5rem; padding:1rem 0;
+}
+svg.loop-svg { width:300px; height:300px; overflow:visible; }
+
+.node-circle { fill:#f5f6f8; stroke:#e3e4e6; stroke-width:2; transition:all .4s; }
+.node-circle.active { fill:rgba(237,27,36,.08); stroke:#ed1b24; stroke-width:2.5; }
+.node-circle.done   { fill:rgba(27,21,100,.06); stroke:#1b1564; }
+
+.node-icon { font-size:18px; text-anchor:middle; dominant-baseline:middle; }
+.node-label { font-family:'Be Vietnam Pro',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; text-anchor:middle; fill:#a2a2a2; }
+.node-label.active-text { fill:#ed1b24; }
+.node-label.done-text   { fill:#1b1564; }
+
+.loop-arrow { fill:none; stroke:#e3e4e6; stroke-width:2; marker-end:url(#arrowhead); transition:stroke .4s; }
+.loop-arrow.lit { stroke:#ed1b24; }
+
+.loop-status {
+  text-align:center;
+  padding:.75rem 1.5rem;
+  background:#f5f6f8; border-radius:8px;
+  min-width:260px;
+}
+.ls-step { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#ed1b24; }
+.ls-desc { font-size:.875rem; font-weight:500; color:#212121; margin-top:.2rem; }
+.ls-iter { font-size:.72rem; color:#a2a2a2; margin-top:.15rem; font-family:'JetBrains Mono',monospace; }
+
+@keyframes glow-pulse {
+  0%,100%{filter:drop-shadow(0 0 4px rgba(237,27,36,.3))}
+  50%     {filter:drop-shadow(0 0 10px rgba(237,27,36,.5))}
+}
+.active-glow { animation:glow-pulse 1.2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+<div class="loop-stage">
+  <svg class="loop-svg" viewBox="0 0 300 300">
+    <defs>
+      <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#e3e4e6" id="arrowFill"/>
+      </marker>
+      <marker id="arrowhead-lit" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#ed1b24"/>
+      </marker>
+    </defs>
+
+    <!-- arcs -->
+    <path id="arc01" class="loop-arrow" d="M 185,88 Q 230,150 185,212" marker-end="url(#arrowhead)"/>
+    <path id="arc12" class="loop-arrow" d="M 150,242 Q 90,242 75,195"  marker-end="url(#arrowhead)"/>
+    <path id="arc23" class="loop-arrow" d="M 75,130 Q 75,80 115,68"    marker-end="url(#arrowhead)"/>
+
+    <!-- nodes -->
+    <g id="n0" transform="translate(150,60)">
+      <circle class="node-circle" r="34"/>
+      <text class="node-icon" y="2">🧠</text>
+      <text class="node-label" y="50">Plan</text>
+    </g>
+    <g id="n1" transform="translate(230,165)">
+      <circle class="node-circle" r="34"/>
+      <text class="node-icon" y="2">⚙️</text>
+      <text class="node-label" y="50">Act</text>
+    </g>
+    <g id="n2" transform="translate(150,250)">
+      <circle class="node-circle" r="34"/>
+      <text class="node-icon" y="2">🔍</text>
+      <text class="node-label" y="50">Observe</text>
+    </g>
+    <g id="n3" transform="translate(68,165)">
+      <circle class="node-circle" r="34"/>
+      <text class="node-icon" y="2">✏️</text>
+      <text class="node-label" y="50">Reflect</text>
+    </g>
+
+    <!-- center -->
+    <text x="150" y="158" text-anchor="middle" font-family="'Be Vietnam Pro',sans-serif" font-size="10" font-weight="700" fill="#a2a2a2" letter-spacing=".06em">AGENT</text>
+    <text x="150" y="172" text-anchor="middle" font-family="'Be Vietnam Pro',sans-serif" font-size="10" fill="#e3e4e6">LOOP</text>
+  </svg>
+
+  <div class="loop-status">
+    <div class="ls-step" id="lsStep">—</div>
+    <div class="ls-desc" id="lsDesc">Initializing…</div>
+    <div class="ls-iter" id="lsIter">iteration 0</div>
+  </div>
+</div>
+
+<script>
+const nodes = ['n0','n1','n2','n3'];
+const arcs  = ['arc01','arc12','arc23','arc30'];
+const info  = [
+  {step:'Plan',    desc:'Analyze task and form strategy'},
+  {step:'Act',     desc:'Execute tools and write output'},
+  {step:'Observe', desc:'Inspect results and side-effects'},
+  {step:'Reflect', desc:'Update memory and re-plan if needed'},
+];
+// add arc30 (from Reflect back to Plan)
+document.getElementById('n3').insertAdjacentHTML('afterend',
+  '<path id="arc30" class="loop-arrow" d="M 96,115 Q 110,68 116,68" marker-end="url(#arrowhead)"/>');
+
+let cur=0, iteration=1;
+function activate(i){
+  nodes.forEach((id,j)=>{
+    const n=document.getElementById(id);
+    const circ=n.querySelector('.node-circle');
+    const lbl=n.querySelector('.node-label');
+    circ.classList.remove('active','done');
+    lbl.classList.remove('active-text','done-text');
+    if(j===i){circ.classList.add('active');lbl.classList.add('active-text');}
+    else if(j<i||(i===0&&j===3)){circ.classList.add('done');lbl.classList.add('done-text');}
+  });
+  const arcId='arc'+cur+''+((cur+1)%4);
+  document.querySelectorAll('.loop-arrow').forEach(a=>a.classList.remove('lit'));
+  const prevArc = document.getElementById('arc'+(((i-1)+4)%4)+''+i);
+  if(prevArc) prevArc.classList.add('lit');
+
+  document.getElementById('lsStep').textContent = info[i].step;
+  document.getElementById('lsDesc').textContent = info[i].desc;
+  document.getElementById('lsIter').textContent = `iteration ${iteration}`;
+}
+function loop(){
+  activate(cur);
+  cur=(cur+1)%4;
+  if(cur===0) iteration++;
+  setTimeout(loop, 1100);
+}
+setTimeout(loop,400);
+</script>
+</body>
+</html>

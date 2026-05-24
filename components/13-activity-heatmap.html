@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>13 · Activity Heat Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.heatmap-wrap { overflow-x:auto; }
+.heatmap-header { display:flex; justify-content:space-between; margin-bottom:.5rem; }
+.hm-title { font-size:.875rem; font-weight:600; color:#212121; }
+.hm-total { font-size:.875rem; color:#ed1b24; font-weight:700; }
+.hm-sub   { font-size:.72rem; color:#a2a2a2; }
+
+.day-labels {
+  display:flex; flex-direction:column; gap:2px;
+  margin-right:.5rem; padding-top:18px;
+}
+.day-lbl { height:12px; font-size:.6rem; color:#a2a2a2; font-family:'JetBrains Mono',monospace; line-height:12px; }
+
+.heatmap-body { display:flex; gap:.5rem; align-items:flex-start; }
+.grid-wrap { overflow-x:auto; }
+.month-labels { display:flex; gap:2px; margin-bottom:4px; padding-left:0; }
+.month-lbl { font-size:.6rem; color:#a2a2a2; font-family:'JetBrains Mono',monospace; }
+.grid { display:flex; gap:2px; }
+.col  { display:flex; flex-direction:column; gap:2px; }
+.cell {
+  width:12px; height:12px; border-radius:2px;
+  background:#ebedf0;
+  opacity:0; transform:scale(.6);
+  transition: opacity .3s ease, transform .3s ease, background .2s;
+}
+.cell.vis { opacity:1; transform:scale(1); }
+.cell:hover { transform:scale(1.3) !important; z-index:10; position:relative; }
+
+.level-0 { background:#ebedf0; }
+.level-1 { background:rgba(237,27,36,.2); }
+.level-2 { background:rgba(237,27,36,.4); }
+.level-3 { background:rgba(237,27,36,.65); }
+.level-4 { background:#ed1b24; }
+
+.legend-row { display:flex; align-items:center; gap:.4rem; margin-top:.75rem; font-size:.65rem; color:#a2a2a2; }
+.legend-row .cell { opacity:1; transform:scale(1); flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="heatmap-header">
+  <div><div class="hm-title">Transaction Activity</div><div class="hm-sub">Giao dịch theo ngày · 16 tuần</div></div>
+  <div style="text-align:right"><div class="hm-total" id="totalCount">0</div><div class="hm-sub">total transactions</div></div>
+</div>
+<div class="heatmap-body">
+  <div class="day-labels">
+    <div class="day-lbl">Mon</div>
+    <div class="day-lbl"></div>
+    <div class="day-lbl">Wed</div>
+    <div class="day-lbl"></div>
+    <div class="day-lbl">Fri</div>
+    <div class="day-lbl"></div>
+    <div class="day-lbl">Sun</div>
+  </div>
+  <div class="grid-wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+<div class="legend-row">
+  Less <div class="cell level-0"></div><div class="cell level-1"></div><div class="cell level-2"></div><div class="cell level-3"></div><div class="cell level-4"></div> More
+</div>
+
+<script>
+const WEEKS = 16, DAYS = 7;
+const grid = document.getElementById('grid');
+const months = ['Jan','Feb','Mar','Apr','May','Jun'];
+let total = 0;
+const cells = [];
+
+for(let w=0; w<WEEKS; w++) {
+  const col = document.createElement('div');
+  col.className = 'col';
+  for(let d=0; d<DAYS; d++) {
+    const val = Math.random() < .15 ? 0 :
+                Math.random() < .3  ? 1 :
+                Math.random() < .55 ? 2 :
+                Math.random() < .8  ? 3 : 4;
+    total += val * 120;
+    const cell = document.createElement('div');
+    cell.className = `cell level-${val}`;
+    col.appendChild(cell);
+    cells.push(cell);
+  }
+  grid.appendChild(col);
+}
+
+// animate in wave
+cells.forEach((c,i) => {
+  const col = Math.floor(i/DAYS), row = i%DAYS;
+  setTimeout(() => c.classList.add('vis'), (col + row) * 18 + 100);
+});
+
+// count up total
+let n=0;
+const tick = setInterval(()=>{
+  n = Math.min(n + Math.ceil(total/60), total);
+  document.getElementById('totalCount').textContent = n.toLocaleString('vi-VN');
+  if(n>=total) clearInterval(tick);
+},30);
+</script>
+</body>
+</html>

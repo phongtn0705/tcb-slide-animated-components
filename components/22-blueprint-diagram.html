@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>22 · Blueprint-style Diagram</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'JetBrains Mono',monospace; }
+.blueprint {
+  background:#0a1628;
+  border-radius:12px;
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+/* grid lines */
+.blueprint::before {
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(99,152,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,152,255,.08) 1px, transparent 1px);
+  background-size:24px 24px;
+}
+svg.bp-svg { position:relative; z-index:1; width:100%; overflow:visible; }
+
+.bp-box   { fill:rgba(99,152,255,.06); stroke:#3b82f6; stroke-width:1.5; rx:4; }
+.bp-line  { stroke:#3b82f6; stroke-width:1.5; fill:none; stroke-dasharray:4 3; }
+.bp-arrow { stroke:#3b82f6; stroke-width:1.5; fill:none; marker-end:url(#bpArrow); }
+.bp-label { font-family:'JetBrains Mono',monospace; fill:#93c5fd; font-size:9px; text-anchor:middle; }
+.bp-title { font-family:'JetBrains Mono',monospace; fill:#60a5fa; font-size:10px; font-weight:700; text-anchor:middle; dominant-baseline:middle; }
+.bp-dim   { font-family:'JetBrains Mono',monospace; fill:#3b82f6; font-size:8px; fill-opacity:.6; }
+.bp-badge { fill:#ed1b24; rx:3; }
+.bp-badge-t{ font-family:'JetBrains Mono',monospace; fill:#fff; font-size:7.5px; font-weight:700; text-anchor:middle; dominant-baseline:middle; }
+
+.bp-node {
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.bp-node.vis { opacity:1; }
+</style>
+</head>
+<body>
+<div class="blueprint">
+<svg class="bp-svg" viewBox="0 0 500 260" id="bpSvg">
+  <defs>
+    <marker id="bpArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- title bar -->
+  <text x="250" y="14" class="bp-label" font-size="10" fill="#60a5fa" font-weight="700">TECHCOMBANK · DIGITAL ARCHITECTURE v2.4</text>
+  <line x1="0" y1="22" x2="500" y2="22" class="bp-line"/>
+
+  <!-- CLIENT layer -->
+  <g class="bp-node" id="n-client">
+    <rect x="10" y="32" width="100" height="36" class="bp-box"/>
+    <text x="60" y="53" class="bp-title">Mobile App</text>
+    <text x="60" y="72" class="bp-label" fill="#3b82f6">iOS · Android · PWA</text>
+  </g>
+  <g class="bp-node" id="n-web">
+    <rect x="120" y="32" width="100" height="36" class="bp-box"/>
+    <text x="170" y="53" class="bp-title">Web Portal</text>
+    <text x="170" y="72" class="bp-label" fill="#3b82f6">React · Next.js</text>
+  </g>
+
+  <!-- API GATEWAY -->
+  <g class="bp-node" id="n-gw">
+    <rect x="10" y="95" width="210" height="30" class="bp-box" style="stroke:#ed1b24"/>
+    <text x="115" y="113" class="bp-title" fill="#fca5a5">API Gateway · Auth · Rate Limit</text>
+  </g>
+
+  <!-- SERVICES -->
+  <g class="bp-node" id="n-svc1">
+    <rect x="10" y="145" width="90" height="34" class="bp-box"/>
+    <text x="55" y="165" class="bp-title" font-size="8.5">Banking Core</text>
+  </g>
+  <g class="bp-node" id="n-svc2">
+    <rect x="110" y="145" width="90" height="34" class="bp-box"/>
+    <text x="155" y="165" class="bp-title" font-size="8.5">Payments</text>
+  </g>
+  <g class="bp-node" id="n-svc3">
+    <rect x="210" y="145" width="90" height="34" class="bp-box"/>
+    <text x="255" y="165" class="bp-title" font-size="8.5">AI Engine</text>
+  </g>
+  <g class="bp-node" id="n-svc4">
+    <rect x="310" y="145" width="90" height="34" class="bp-box"/>
+    <text x="355" y="165" class="bp-title" font-size="8.5">Notifications</text>
+  </g>
+
+  <!-- DATA layer -->
+  <g class="bp-node" id="n-db">
+    <rect x="10" y="200" width="120" height="30" class="bp-box"/>
+    <text x="70" y="218" class="bp-title" font-size="8.5">PostgreSQL Cluster</text>
+  </g>
+  <g class="bp-node" id="n-cache">
+    <rect x="140" y="200" width="80" height="30" class="bp-box"/>
+    <text x="180" y="218" class="bp-title" font-size="8.5">Redis Cache</text>
+  </g>
+  <g class="bp-node" id="n-queue">
+    <rect x="230" y="200" width="80" height="30" class="bp-box"/>
+    <text x="270" y="218" class="bp-title" font-size="8.5">Kafka Queue</text>
+  </g>
+
+  <!-- AI box -->
+  <g class="bp-node" id="n-ai">
+    <rect x="310" y="32" width="180" height="110" class="bp-box" style="stroke:#d6b973"/>
+    <text x="400" y="52" class="bp-title" fill="#fde68a">AI / ML Platform</text>
+    <text x="400" y="68" class="bp-label" fill="#d6b973">Claude claude-sonnet-4-6</text>
+    <text x="400" y="82" class="bp-label" fill="#d6b973">Fraud Detection</text>
+    <text x="400" y="96" class="bp-label" fill="#d6b973">Credit Scoring</text>
+    <text x="400" y="110" class="bp-label" fill="#d6b973">Personalization</text>
+    <rect x="456" y="35" width="30" height="14" class="bp-badge" rx="3"/>
+    <text x="471" y="43" class="bp-badge-t">LIVE</text>
+  </g>
+
+  <!-- ARROWS -->
+  <g class="bp-node" id="n-arrows">
+    <line x1="60" y1="68" x2="60" y2="95" class="bp-arrow"/>
+    <line x1="170" y1="68" x2="170" y2="95" class="bp-arrow"/>
+    <line x1="55"  y1="125" x2="55"  y2="145" class="bp-arrow"/>
+    <line x1="115" y1="125" x2="155" y2="145" class="bp-arrow"/>
+    <line x1="200" y1="125" x2="255" y2="145" class="bp-arrow"/>
+    <line x1="55"  y1="179" x2="55"  y2="200" class="bp-arrow"/>
+    <line x1="155" y1="179" x2="175" y2="200" class="bp-arrow"/>
+    <line x1="255" y1="179" x2="265" y2="200" class="bp-arrow"/>
+  </g>
+
+  <!-- dimension notes -->
+  <text x="490" y="145" class="bp-dim" transform="rotate(-90,490,145)">SERVICES LAYER</text>
+  <text x="490" y="220" class="bp-dim" transform="rotate(-90,490,220)">DATA LAYER</text>
+</svg>
+</div>
+
+<script>
+const order=['n-client','n-web','n-ai','n-gw','n-svc1','n-svc2','n-svc3','n-svc4','n-db','n-cache','n-queue','n-arrows'];
+order.forEach((id,i)=>{
+  setTimeout(()=>document.getElementById(id)?.classList.add('vis'), i*90+200);
+});
+</script>
+</body>
+</html>

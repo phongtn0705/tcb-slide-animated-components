@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>11 · Context Window Jar</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+.jar-scene {
+  display: flex; gap: 3rem; align-items: flex-end; justify-content: center;
+  padding: 1rem 0 0;
+}
+.jar-wrap { display:flex; flex-direction:column; align-items:center; gap:.75rem; }
+.jar-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#616161; }
+.jar {
+  width: 80px; height: 200px;
+  border: 2.5px solid #1b1564;
+  border-radius: 4px 4px 10px 10px;
+  position: relative; overflow: hidden;
+  background: #f5f6f8;
+}
+.jar::before {
+  content:''; position:absolute; top:-8px; left:-8px; right:-8px;
+  height:14px; border:2.5px solid #1b1564; border-radius:4px;
+  background:#fff;
+}
+.jar-fill {
+  position: absolute; bottom:0; left:0; right:0;
+  height: 0; transition: height 1.6s cubic-bezier(0.16,1,0.3,1);
+  display: flex; flex-direction: column-reverse; overflow: hidden;
+}
+.fill-seg {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono',monospace;
+  font-size: .55rem; color: rgba(255,255,255,.85);
+  font-weight: 700; letter-spacing: .04em;
+  white-space: nowrap; overflow: hidden;
+}
+.seg-sys    { background: #1b1564; }
+.seg-memory { background: #4361ee; }
+.seg-tools  { background: #ed1b24; }
+.seg-conv   { background: #d6b973; }
+.seg-free   { background: rgba(27,21,100,.08); }
+
+.jar-pct {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.2rem; font-weight:700; color:#1b1564;
+}
+.jar-sub { font-size:.72rem; color:#a2a2a2; font-family:'JetBrains Mono',monospace; }
+
+.legend { display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; justify-content:center; margin-top:1.5rem; }
+.leg-item { display:flex; align-items:center; gap:.4rem; font-size:.72rem; color:#616161; }
+.leg-dot  { width:10px;height:10px;border-radius:2px;flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="jar-scene">
+  <div class="jar-wrap">
+    <div class="jar-label">128K context</div>
+    <div class="jar" id="jar1">
+      <div class="jar-fill" id="fill1">
+        <div class="fill-seg seg-sys"    style="height:14%">system</div>
+        <div class="fill-seg seg-memory" style="height:18%">memory</div>
+        <div class="fill-seg seg-tools"  style="height:12%">tools</div>
+        <div class="fill-seg seg-conv"   style="height:32%">conversation</div>
+      </div>
+    </div>
+    <div class="jar-pct" id="pct1">0%</div>
+    <div class="jar-sub">76K / 128K</div>
+  </div>
+
+  <div class="jar-wrap">
+    <div class="jar-label">32K context</div>
+    <div class="jar" id="jar2">
+      <div class="jar-fill" id="fill2">
+        <div class="fill-seg seg-sys"    style="height:18%">system</div>
+        <div class="fill-seg seg-tools"  style="height:20%">tools</div>
+        <div class="fill-seg seg-conv"   style="height:54%">conversation</div>
+      </div>
+    </div>
+    <div class="jar-pct" id="pct2">0%</div>
+    <div class="jar-sub">29K / 32K</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot seg-sys"></div>System prompt</div>
+  <div class="leg-item"><div class="leg-dot seg-memory"></div>Memory</div>
+  <div class="leg-item"><div class="leg-dot seg-tools"></div>Tool results</div>
+  <div class="leg-item"><div class="leg-dot seg-conv"></div>Conversation</div>
+</div>
+
+<script>
+function animJar(fillEl, pctEl, targetPct) {
+  fillEl.style.height = targetPct + '%';
+  const start = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - start) / 1600, 1);
+    const ease = 1 - Math.pow(2, -10 * p);
+    pctEl.textContent = Math.round(ease * targetPct) + '%';
+    if (p < 1) requestAnimationFrame(tick);
+  })(start);
+}
+setTimeout(() => {
+  animJar(document.getElementById('fill1'), document.getElementById('pct1'), 76);
+  animJar(document.getElementById('fill2'), document.getElementById('pct2'), 92);
+}, 400);
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>10 · Token Stream</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-navy:#1b1564; --tcb-bg:#f5f6f8; --tcb-card:#fff; --tcb-text:#212121; --tcb-muted:#616161; --tcb-line:#e3e4e6; }
+body { background:#fff; padding:2rem; font-family:'Be Vietnam Pro',sans-serif; }
+
+.token-stream-wrap {
+  background: #0d1117;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+.stream-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  color: #39d353;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+  opacity: .7;
+}
+.stream-output {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: #e6edf3;
+  min-height: 3.5em;
+}
+.token {
+  display: inline;
+  opacity: 0;
+  animation: token-in .12s ease forwards;
+}
+@keyframes token-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.token.highlight { color: #ed1b24; }
+.token.dim       { color: #8b949e; }
+
+.cursor-blink {
+  display: inline-block;
+  width: 8px; height: 1em;
+  background: #39d353;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: cur-blink .8s steps(1) infinite;
+}
+@keyframes cur-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.stream-meta {
+  display: flex; gap: 1.5rem; margin-top: 1rem;
+}
+.meta-item { text-align: center; }
+.meta-val { font-family: 'JetBrains Mono', monospace; font-size: .9rem; font-weight: 700; color: #39d353; }
+.meta-key { font-size: .65rem; color: #8b949e; margin-top: .1rem; }
+</style>
+</head>
+<body>
+<div class="token-stream-wrap">
+  <div class="stream-label">▶ token stream · live</div>
+  <div class="stream-output" id="streamOutput"><span class="cursor-blink"></span></div>
+  <div class="stream-meta">
+    <div class="meta-item"><div class="meta-val" id="tokCount">0</div><div class="meta-key">tokens</div></div>
+    <div class="meta-item"><div class="meta-val" id="tokSpeed">0</div><div class="meta-key">tok/s</div></div>
+    <div class="meta-item"><div class="meta-val" id="tokTime">0.0s</div><div class="meta-key">elapsed</div></div>
+  </div>
+</div>
+
+<script>
+const words = [
+  {t:'Techcombank',c:'highlight'},{t:' đang',c:''},{t:' tiên',c:''},{t:' phong',c:''},{t:' trong',c:''},
+  {t:' chuyển',c:''},{t:' đổi',c:''},{t:' số',c:'highlight'},{t:'.',c:'dim'},{t:' Với',c:''},
+  {t:' hơn',c:''},{t:' 12',c:'highlight'},{t:'.5M',c:'highlight'},{t:' khách',c:''},{t:' hàng',c:''},
+  {t:' và',c:''},{t:' nền',c:''},{t:' tảng',c:''},{t:' AI',c:'highlight'},{t:' tiên',c:''},
+  {t:' tiến',c:''},{t:',',c:'dim'},{t:' chúng',c:''},{t:' tôi',c:''},{t:' định',c:''},
+  {t:' nghĩa',c:''},{t:' lại',c:''},{t:' trải',c:''},{t:' nghiệm',c:''},{t:' ngân',c:''},
+  {t:' hàng',c:''},{t:' cho',c:''},{t:' thế',c:''},{t:' hệ',c:''},{t:' tiếp',c:''},
+  {t:' theo',c:''},{t:'.',c:'dim'}
+];
+
+let i = 0, count = 0, startTime = null;
+const output = document.getElementById('streamOutput');
+
+function streamNext() {
+  if (i >= words.length) {
+    document.querySelector('.cursor-blink').style.animation = 'none';
+    document.querySelector('.cursor-blink').style.opacity = '1';
+    return;
+  }
+  if (!startTime) startTime = performance.now();
+
+  const w = words[i++];
+  const span = document.createElement('span');
+  span.className = 'token' + (w.c ? ' '+w.c : '');
+  span.textContent = w.t;
+  span.style.animationDelay = '0ms';
+  output.insertBefore(span, output.lastElementChild);
+  count++;
+
+  const elapsed = (performance.now() - startTime) / 1000;
+  document.getElementById('tokCount').textContent = count;
+  document.getElementById('tokSpeed').textContent = Math.round(count / elapsed);
+  document.getElementById('tokTime').textContent = elapsed.toFixed(1) + 's';
+
+  const delay = 60 + Math.random() * 80;
+  setTimeout(streamNext, delay);
+}
+
+setTimeout(streamNext, 600);
+</script>
+</body>
+</html>
