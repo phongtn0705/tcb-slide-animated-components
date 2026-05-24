@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>01 · Stat Counter</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── PASTE THIS CSS ── */
+:root {
+  --tcb-red: #ed1b24; --tcb-bg: #f5f6f8;
+  --tcb-text: #212121; --tcb-mid: #a2a2a2;
+  --font: 'Be Vietnam Pro', sans-serif;
+}
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; font-family: var(--font); }
+.stat-card { text-align: center; padding: 1.5rem 1rem; background: var(--tcb-bg); border-radius: 8px; }
+.stat-number { font-size: clamp(2rem,4vw,3rem); font-weight: 700; color: var(--tcb-red); line-height: 1; display: block; }
+.stat-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--tcb-mid); margin-top: .45rem; }
+/* ── END CSS ── */
+body { background: #fff; padding: 2rem; }
+</style>
+</head>
+<body>
+
+<!-- ── PASTE THIS HTML ── -->
+<div class="stats-row">
+  <div class="stat-card">
+    <span class="stat-number" data-target="12.5" data-suffix="M+">0</span>
+    <div class="stat-lbl">Khách hàng</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number" data-target="500" data-suffix="K">0</span>
+    <div class="stat-lbl">Giao dịch / ngày</div>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number" data-target="98.7" data-suffix="%">0</span>
+    <div class="stat-lbl">Uptime SLA</div>
+  </div>
+</div>
+<!-- ── END HTML ── -->
+
+<script>
+/* ── PASTE THIS JS ── */
+function easeOutExpo(t){return t===1?1:1-Math.pow(2,-10*t);}
+function animateNum(el,end,dur,suffix){
+  const start=performance.now(),isFloat=!Number.isInteger(end);
+  (function tick(now){
+    const p=Math.min((now-start)/dur,1),v=easeOutExpo(p)*end;
+    el.textContent=(isFloat?v.toFixed(1):Math.round(v))+suffix;
+    if(p<1)requestAnimationFrame(tick);
+  })(start);
+}
+function runCounter(){
+  document.querySelectorAll('.stat-number').forEach(el=>
+    animateNum(el,parseFloat(el.dataset.target),1600,el.dataset.suffix||''));
+}
+/* trigger: call runCounter() on slide visible */
+/* ── END JS ── */
+
+// Auto-run for preview
+runCounter();
+</script>
+</body>
+</html>

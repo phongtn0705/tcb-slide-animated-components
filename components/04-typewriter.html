@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>04 · Typewriter Headline</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-navy:#1b1564; --font:'Be Vietnam Pro',sans-serif; }
+.tw-text { font-family:var(--font); font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:300; color:var(--tcb-navy); min-height:1.5em; text-align:center; }
+.tw-cursor { display:inline-block; width:2px; height:1em; background:var(--tcb-red); margin-left:2px; vertical-align:text-bottom; animation:blink .75s steps(1) infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+body { background:#fff; padding:3rem 2rem; }
+</style>
+</head>
+<body>
+<div class="tw-text"><span id="twContent"></span><span class="tw-cursor"></span></div>
+<script>
+/* ── EDIT phrases to customise ── */
+const phrases = [
+  'Ngân hàng cho tương lai.',
+  'Vì một Việt Nam thịnh vượng.',
+  'Techcombank — Cùng bạn đi xa hơn.'
+];
+let idx=0,timer=null;
+function type(phrase,el,done){
+  let i=0;el.textContent='';
+  (function t(){if(i<phrase.length){el.textContent+=phrase[i++];timer=setTimeout(t,60);}else setTimeout(()=>erase(el,done),1800);})();
+}
+function erase(el,done){(function e(){if(el.textContent.length){el.textContent=el.textContent.slice(0,-1);timer=setTimeout(e,32);}else done();})();}
+function run(){const el=document.getElementById('twContent');type(phrases[idx%phrases.length],el,()=>{idx++;setTimeout(run,350);});}
+run();
+</script>
+</body>
+</html>

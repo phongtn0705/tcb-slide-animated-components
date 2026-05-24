@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>09 · Shimmer → Reveal</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-navy:#1b1564; --tcb-bg:#f5f6f8; --tcb-text:#212121; --tcb-muted:#616161; --font:'Be Vietnam Pro',sans-serif; }
+.shim-card { background:var(--tcb-bg);border-radius:8px;padding:1.5rem;display:flex;gap:1rem;align-items:center;font-family:var(--font); }
+.shim-avatar { width:52px;height:52px;border-radius:50%;flex-shrink:0; }
+.shim-lines { flex:1;display:flex;flex-direction:column;gap:.5rem; }
+.shim-line  { height:12px;border-radius:6px; }
+.shim-line.w60{width:60%}.shim-line.w80{width:80%}.shim-line.w40{width:40%}
+@keyframes shimmer-anim{0%{background-position:-500px 0}100%{background-position:500px 0}}
+.shim-loading .shim-avatar,.shim-loading .shim-line{background:linear-gradient(90deg,#e2e5e8 25%,#f0f2f4 50%,#e2e5e8 75%);background-size:1000px 100%;animation:shimmer-anim 1.5s linear infinite;}
+.shim-real { display:none; }
+.shim-real-avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:var(--tcb-navy);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.1rem;}
+.shim-real-name { font-size:1rem;font-weight:600;color:var(--tcb-text); }
+.shim-real-role { font-size:.82rem;color:var(--tcb-muted);margin:.2rem 0; }
+.shim-real-badge{display:inline-block;background:rgba(237,27,36,.08);color:var(--tcb-red);font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-top:.3rem;}
+.shim-card.revealed .shim-loading{display:none;}
+.shim-card.revealed .shim-real{display:flex;align-items:center;gap:1rem;width:100%;}
+body { background:#fff; padding:2rem; max-width:420px; }
+</style>
+</head>
+<body>
+<div class="shim-card" id="shimCard">
+  <div class="shim-loading" style="display:flex;gap:1rem;align-items:center;width:100%">
+    <div class="shim-avatar"></div>
+    <div class="shim-lines">
+      <div class="shim-line w60"></div>
+      <div class="shim-line w80"></div>
+      <div class="shim-line w40"></div>
+    </div>
+  </div>
+  <div class="shim-real">
+    <div class="shim-real-avatar">TN</div>
+    <div>
+      <div class="shim-real-name">Trần Nhật Phong</div>
+      <div class="shim-real-role">Product Manager · Techcombank Digital</div>
+      <div class="shim-real-badge">Premium Customer</div>
+    </div>
+  </div>
+</div>
+<script>
+setTimeout(()=>document.getElementById('shimCard').classList.add('revealed'), 2200);
+</script>
+</body>
+</html>

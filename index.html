@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Components — Techcombank Preset</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tcb-red:   #ed1b24;
+            --tcb-navy:  #1b1564;
+            --tcb-gold:  #d6b973;
+            --tcb-bg:    #f5f6f8;
+            --tcb-card:  #ffffff;
+            --tcb-text:  #212121;
+            --tcb-muted: #616161;
+            --tcb-line:  #e3e4e6;
+            --tcb-mid:   #a2a2a2;
+            --font: 'Be Vietnam Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font);
+            background: var(--tcb-bg);
+            color: var(--tcb-text);
+            padding: 3rem 2rem 6rem;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+        }
+        .page-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 300;
+            color: var(--tcb-navy);
+        }
+        .page-header p {
+            color: var(--tcb-muted);
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+        }
+
+        /* ── SECTION WRAPPER ── */
+        .comp {
+            max-width: 860px;
+            margin: 0 auto 4.5rem;
+        }
+        .comp-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--tcb-red);
+            margin-bottom: 0.4rem;
+        }
+        .comp-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--tcb-text);
+            margin-bottom: 0.35rem;
+        }
+        .comp-desc {
+            font-size: 0.875rem;
+            color: var(--tcb-muted);
+            margin-bottom: 1.25rem;
+            line-height: 1.65;
+        }
+        .demo {
+            background: var(--tcb-card);
+            border: 1px solid var(--tcb-line);
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .demo::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--tcb-red);
+        }
+
+        /* ── REPLAY BUTTON ── */
+        .replay-btn {
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.25rem;
+            background: transparent;
+            color: var(--tcb-navy);
+            border: 1.5px solid var(--tcb-navy);
+            border-radius: 8px;
+            font-family: var(--font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .replay-btn:hover { background: var(--tcb-navy); color: #fff; }
+
+        hr.div {
+            border: none;
+            border-top: 1px solid var(--tcb-line);
+            max-width: 860px;
+            margin: 0 auto 4.5rem;
+        }
+
+        /* ── NAV DOTS ── */
+        .nav {
+            position: fixed;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            z-index: 100;
+        }
+        .nav a {
+            width: 7px; height: 7px;
+            background: var(--tcb-line);
+            border-radius: 50%;
+            display: block;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .nav a.active, .nav a:hover {
+            background: var(--tcb-red);
+            transform: scale(1.5);
+        }
+
+        /* ═══════════════════════════════════════
+           01  STAT COUNTER
+        ═══════════════════════════════════════ */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: var(--tcb-bg);
+            border-radius: 8px;
+        }
+        .stat-number {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--tcb-red);
+            line-height: 1;
+            display: block;
+        }
+        .stat-lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--tcb-mid);
+            margin-top: 0.45rem;
+        }
+
+        /* ═══════════════════════════════════════
+           02  PROGRESS BARS
+        ═══════════════════════════════════════ */
+        .prog-list { display: flex; flex-direction: column; gap: 1.25rem; }
+        .prog-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+        .prog-name { font-size: 0.875rem; font-weight: 600; }
+        .prog-val  { font-size: 0.875rem; font-weight: 700; color: var(--tcb-red); }
+        .prog-track {
+            height: 6px;
+            background: var(--tcb-line);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+        .prog-fill {
+            height: 100%;
+            border-radius: 99px;
+            width: 0;
+            transition: width 1.2s var(--ease);
+        }
+        .prog-fill.red   { background: var(--tcb-red); }
+        .prog-fill.navy  { background: var(--tcb-navy); }
+        .prog-fill.gold  { background: var(--tcb-gold); }
+
+        /* ═══════════════════════════════════════
+           03  STAGGERED CARDS
+        ═══════════════════════════════════════ */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .feat-card {
+            background: var(--tcb-bg);
+            border: 1px solid var(--tcb-line);
+            border-radius: 8px;
+            padding: 1.25rem;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+        }
+        .feat-card.vis { opacity: 1; transform: translateY(0); }
+        .feat-icon {
+            width: 36px; height: 36px;
+            background: rgba(237,27,36,0.08);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+        .feat-name { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .feat-desc { font-size: 0.78rem; color: var(--tcb-muted); line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           04  TYPEWRITER
+        ═══════════════════════════════════════ */
+        .tw-stage { text-align: center; padding: 1rem 0; }
+        .tw-text {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 300;
+            color: var(--tcb-navy);
+            min-height: 1.5em;
+        }
+        .tw-cursor {
+            display: inline-block;
+            width: 2px; height: 1em;
+            background: var(--tcb-red);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.75s steps(1) infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* ═══════════════════════════════════════
+           05  TIMELINE
+        ═══════════════════════════════════════ */
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px; top: 8px; bottom: 8px;
+            width: 2px;
+            background: var(--tcb-line);
+        }
+        .tl-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-14px);
+            transition: all 0.5s var(--ease);
+        }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-item.vis { opacity: 1; transform: translateX(0); }
+        .tl-dot {
+            position: absolute;
+            left: calc(-2rem + 0px);
+            top: 4px;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--tcb-card);
+            border: 2px solid var(--tcb-line);
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .tl-item.vis .tl-dot { border-color: var(--tcb-red); background: var(--tcb-red); }
+        .tl-year {
+            font-size: 0.68rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--tcb-red);
+        }
+        .tl-title { font-size: 1rem; font-weight: 600; margin: 0.1rem 0 0.2rem; }
+        .tl-desc  { font-size: 0.85rem; color: var(--tcb-muted); line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           06  DONUT CHART
+        ═══════════════════════════════════════ */
+        .donut-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .donut-item { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+        .donut-svg  { width: 110px; height: 110px; }
+        .donut-track { fill: none; stroke: var(--tcb-line); stroke-width: 10; }
+        .donut-fill  {
+            fill: none; stroke-width: 10; stroke-linecap: round;
+            transform-origin: center;
+            transform: rotate(-90deg);
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            transition: stroke-dashoffset 1.4s var(--ease);
+        }
+        .donut-ct {
+            font-family: var(--font);
+            font-size: 17px; font-weight: 700;
+            fill: var(--tcb-text);
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        .donut-lbl { font-size: 0.78rem; font-weight: 600; color: var(--tcb-muted); text-align: center; }
+
+        /* ═══════════════════════════════════════
+           07  BAR CHART
+        ═══════════════════════════════════════ */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.6rem;
+            height: 170px;
+            padding-top: 1.5rem;
+        }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; height: 100%; }
+        .bar-val-lbl {
+            font-size: 0.72rem; font-weight: 700; color: var(--tcb-text);
+            opacity: 0;
+            transition: opacity 0.3s ease 1.1s;
+        }
+        .bar-col.anim .bar-val-lbl { opacity: 1; }
+        .bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+        .bar-fill {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            height: 0;
+            transition: height 1.2s var(--ease);
+        }
+        .bar-fill.red   { background: var(--tcb-red); }
+        .bar-fill.navy  { background: var(--tcb-navy); }
+        .bar-fill.gold  { background: var(--tcb-gold); }
+        .bar-x-lbl { font-size: 0.7rem; color: var(--tcb-muted); }
+
+        /* ═══════════════════════════════════════
+           08  TOAST NOTIFICATIONS
+        ═══════════════════════════════════════ */
+        .toast-demo { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+        .live-row   { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.25rem; }
+        .live-txt   { font-size: 0.78rem; color: var(--tcb-muted); }
+        .pulse-dot  {
+            width: 8px; height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .pulse-dot::before {
+            content: '';
+            position: absolute; inset: -4px;
+            border-radius: 50%;
+            background: rgba(34,197,94,0.3);
+            animation: pulse-ring 1.5s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0%   { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .toast {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.875rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--tcb-line);
+            background: var(--tcb-card);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            max-width: 360px;
+            opacity: 0;
+            transform: translateX(-24px);
+            transition: all 0.5s var(--ease);
+        }
+        .toast.vis { opacity: 1; transform: translateX(0); }
+        .toast-icon {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .toast-icon.ok   { background: rgba(34,197,94,0.12); }
+        .toast-icon.warn { background: rgba(214,185,115,0.22); }
+        .toast-icon.err  { background: rgba(237,27,36,0.1); }
+        .toast-title   { font-size: 0.875rem; font-weight: 600; }
+        .toast-message { font-size: 0.78rem; color: var(--tcb-muted); }
+
+        /* ═══════════════════════════════════════
+           09  SHIMMER → REVEAL
+        ═══════════════════════════════════════ */
+        .shim-card {
+            background: var(--tcb-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex; gap: 1rem; align-items: center;
+        }
+        .shim-avatar {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .shim-lines { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+        .shim-line  { height: 12px; border-radius: 6px; }
+        .shim-line.w60 { width: 60%; }
+        .shim-line.w80 { width: 80%; }
+        .shim-line.w40 { width: 40%; }
+
+        @keyframes shimmer-anim {
+            0%   { background-position: -500px 0; }
+            100% { background-position: 500px 0; }
+        }
+        .shim-loading .shim-avatar,
+        .shim-loading .shim-line {
+            background: linear-gradient(90deg, #e2e5e8 25%, #f0f2f4 50%, #e2e5e8 75%);
+            background-size: 1000px 100%;
+            animation: shimmer-anim 1.5s linear infinite;
+        }
+
+        .shim-real { display: none; }
+        .shim-real-name { font-size: 1rem; font-weight: 600; }
+        .shim-real-role { font-size: 0.82rem; color: var(--tcb-muted); margin: 0.2rem 0; }
+        .shim-real-badge {
+            display: inline-block;
+            background: rgba(237,27,36,0.08);
+            color: var(--tcb-red);
+            font-size: 0.64rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 2px 8px; border-radius: 4px;
+            margin-top: 0.3rem;
+        }
+        .shim-real-avatar {
+            width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+            background: var(--tcb-navy);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 1.1rem;
+        }
+
+        .shim-card.revealed .shim-loading { display: none; }
+        .shim-card.revealed .shim-real    { display: flex; align-items: center; gap: 1rem; width: 100%; }
+
+        .shim-btn {
+            margin-top: 1.25rem;
+            padding: 0.55rem 1.4rem;
+            background: var(--tcb-red); color: #fff;
+            border: none; border-radius: 8px;
+            font-family: var(--font); font-size: 0.875rem; font-weight: 600;
+            cursor: pointer; transition: opacity 0.2s;
+        }
+        .shim-btn:hover { opacity: 0.87; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV DOTS ── -->
+<nav class="nav">
+    <a href="#c1" title="Stat Counter"></a>
+    <a href="#c2" title="Progress Bars"></a>
+    <a href="#c3" title="Staggered Cards"></a>
+    <a href="#c4" title="Typewriter"></a>
+    <a href="#c5" title="Timeline"></a>
+    <a href="#c6" title="Donut Chart"></a>
+    <a href="#c7" title="Bar Chart"></a>
+    <a href="#c8" title="Toast Notifications"></a>
+    <a href="#c9" title="Shimmer Reveal"></a>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<header class="page-header">
+    <h1>Animated Components</h1>
+    <p>Frontend Slides · Techcombank Preset · 9 components · scroll-triggered + replay</p>
+</header>
+
+<!-- ════════════════════════════════════════════
+     01  STAT COUNTER
+════════════════════════════════════════════ -->
+<section class="comp" id="c1">
+    <div class="comp-label">Component 01</div>
+    <div class="comp-title">Stat Counter</div>
+    <div class="comp-desc">Số liệu đếm từ 0 lên khi slide xuất hiện. Dùng cho KPI slides — số khách hàng, doanh thu, giao dịch.</div>
+    <div class="demo">
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-number" data-target="12.5" data-suffix="M+">0</span>
+                <div class="stat-lbl">Khách hàng</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="500" data-suffix="K">0</span>
+                <div class="stat-lbl">Giao dịch / ngày</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="98.7" data-suffix="%">0</span>
+                <div class="stat-lbl">Uptime SLA</div>
+            </div>
+        </div>
+        <button class="replay-btn" onclick="replayCounter()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     02  PROGRESS BARS
+════════════════════════════════════════════ -->
+<section class="comp" id="c2">
+    <div class="comp-label">Component 02</div>
+    <div class="comp-title">Animated Progress Bars</div>
+    <div class="comp-desc">Fill bars với label và %. Dùng cho mức độ hoàn thành, product adoption, hoặc target vs actual.</div>
+    <div class="demo">
+        <div class="prog-list">
+            <div>
+                <div class="prog-header">
+                    <span class="prog-name">Tiền gửi</span>
+                    <span class="prog-val">84%</span>
+                </div>
+                <div class="prog-track"><div class="prog-fill red" data-width="84"></div></div>
+            </div>
+            <div>
+                <div class="prog-header">
+                    <span class="prog-name">Cho vay cá nhân</span>
+                    <span class="prog-val">67%</span>
+                </div>
+                <div class="prog-track"><div class="prog-fill navy" data-width="67"></div></div>
+            </div>
+            <div>
+                <div class="prog-header">
+                    <span class="prog-name">Thanh toán số</span>
+                    <span class="prog-val">91%</span>
+                </div>
+                <div class="prog-track"><div class="prog-fill gold" data-width="91"></div></div>
+            </div>
+        </div>
+        <button class="replay-btn" onclick="replayProgress()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     03  STAGGERED CARD REVEAL
+════════════════════════════════════════════ -->
+<section class="comp" id="c3">
+    <div class="comp-label">Component 03</div>
+    <div class="comp-title">Staggered Card Reveal</div>
+    <div class="comp-desc">Cards cascade vào với delay lệch nhau. Dùng cho feature highlights, product benefits, service grid.</div>
+    <div class="demo">
+        <div class="card-grid" id="cardGrid">
+            <div class="feat-card"><div class="feat-icon">💳</div><div class="feat-name">Thẻ thông minh</div><div class="feat-desc">Thanh toán contactless, cashback tự động</div></div>
+            <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-name">Mobile Banking</div><div class="feat-desc">Giao dịch 24/7 ngay trên điện thoại</div></div>
+            <div class="feat-card"><div class="feat-icon">🏦</div><div class="feat-name">Tiết kiệm linh hoạt</div><div class="feat-desc">Lãi suất cạnh tranh, tất toán bất kỳ lúc</div></div>
+            <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-name">Bảo mật cao</div><div class="feat-desc">Xác thực sinh trắc học &amp; OTP</div></div>
+            <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-name">Quản lý chi tiêu</div><div class="feat-desc">Phân tích tự động theo danh mục</div></div>
+            <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-name">Chuyển tiền quốc tế</div><div class="feat-desc">Hơn 150 quốc gia, tỷ giá cạnh tranh</div></div>
+        </div>
+        <button class="replay-btn" onclick="replayCards()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     04  TYPEWRITER HEADLINE
+════════════════════════════════════════════ -->
+<section class="comp" id="c4">
+    <div class="comp-label">Component 04</div>
+    <div class="comp-title">Typewriter Headline</div>
+    <div class="comp-desc">Chữ gõ từng ký tự rồi xoá, lặp qua nhiều phrases. Dùng cho cover slide hoặc section opener có statement mạnh.</div>
+    <div class="demo">
+        <div class="tw-stage">
+            <div class="tw-text">
+                <span id="twContent"></span><span class="tw-cursor"></span>
+            </div>
+        </div>
+        <button class="replay-btn" onclick="replayTypewriter()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     05  ANIMATED TIMELINE
+════════════════════════════════════════════ -->
+<section class="comp" id="c5">
+    <div class="comp-label">Component 05</div>
+    <div class="comp-title">Animated Timeline</div>
+    <div class="comp-desc">Milestones xuất hiện tuần tự từ trên xuống. Dùng cho roadmap, lịch sử công ty, product journey.</div>
+    <div class="demo">
+        <div class="timeline" id="timeline">
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2008</div><div class="tl-title">Thành lập Techcombank</div><div class="tl-desc">Ra mắt với vốn điều lệ 20 tỷ đồng tại Hà Nội</div></div>
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2015</div><div class="tl-title">Digital Transformation</div><div class="tl-desc">Ra mắt F@st Mobile — ứng dụng ngân hàng số đầu tiên</div></div>
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2020</div><div class="tl-title">Top 10 NH Asia-Pacific</div><div class="tl-desc">Được vinh danh tại giải thưởng The Asian Banker</div></div>
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2024</div><div class="tl-title">12.5M Khách hàng</div><div class="tl-desc">Mốc khách hàng lớn nhất trong lịch sử ngân hàng</div></div>
+        </div>
+        <button class="replay-btn" onclick="replayTimeline()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     06  DONUT CHART
+════════════════════════════════════════════ -->
+<section class="comp" id="c6">
+    <div class="comp-label">Component 06</div>
+    <div class="comp-title">Donut / Ring Chart</div>
+    <div class="comp-desc">SVG ring chart animate từ 0. Dùng cho tỷ lệ phần trăm — market share, NPS, loan approval rate, satisfaction.</div>
+    <div class="demo">
+        <div class="donut-row" id="donutRow">
+            <div class="donut-item">
+                <svg class="donut-svg" viewBox="0 0 100 100">
+                    <circle class="donut-track" cx="50" cy="50" r="40"/>
+                    <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#ed1b24" data-pct="82"/>
+                    <text class="donut-ct" x="50" y="50">82%</text>
+                </svg>
+                <div class="donut-lbl">NPS Score</div>
+            </div>
+            <div class="donut-item">
+                <svg class="donut-svg" viewBox="0 0 100 100">
+                    <circle class="donut-track" cx="50" cy="50" r="40"/>
+                    <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#1b1564" data-pct="67"/>
+                    <text class="donut-ct" x="50" y="50">67%</text>
+                </svg>
+                <div class="donut-lbl">Tỷ lệ duyệt vay</div>
+            </div>
+            <div class="donut-item">
+                <svg class="donut-svg" viewBox="0 0 100 100">
+                    <circle class="donut-track" cx="50" cy="50" r="40"/>
+                    <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#d6b973" data-pct="94"/>
+                    <text class="donut-ct" x="50" y="50">94%</text>
+                </svg>
+                <div class="donut-lbl">Khách hàng hài lòng</div>
+            </div>
+        </div>
+        <button class="replay-btn" onclick="replayDonuts()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     07  BAR CHART
+════════════════════════════════════════════ -->
+<section class="comp" id="c7">
+    <div class="comp-label">Component 07</div>
+    <div class="comp-title">Animated Bar Chart</div>
+    <div class="comp-desc">Vertical bars grow từ baseline lên. Dùng cho quarterly comparison, doanh thu theo sản phẩm, channel performance.</div>
+    <div class="demo">
+        <div class="bar-chart" id="barChart">
+            <div class="bar-col"><div class="bar-val-lbl">Q1</div><div class="bar-track"><div class="bar-fill red" data-height="55"></div></div><div class="bar-x-lbl">2023</div></div>
+            <div class="bar-col"><div class="bar-val-lbl">Q2</div><div class="bar-track"><div class="bar-fill red" data-height="70"></div></div><div class="bar-x-lbl">2023</div></div>
+            <div class="bar-col"><div class="bar-val-lbl">Q3</div><div class="bar-track"><div class="bar-fill navy" data-height="62"></div></div><div class="bar-x-lbl">2023</div></div>
+            <div class="bar-col"><div class="bar-val-lbl">Q4</div><div class="bar-track"><div class="bar-fill navy" data-height="85"></div></div><div class="bar-x-lbl">2023</div></div>
+            <div class="bar-col"><div class="bar-val-lbl">Q1</div><div class="bar-track"><div class="bar-fill gold" data-height="90"></div></div><div class="bar-x-lbl">2024</div></div>
+            <div class="bar-col"><div class="bar-val-lbl">Q2</div><div class="bar-track"><div class="bar-fill gold" data-height="100"></div></div><div class="bar-x-lbl">2024</div></div>
+        </div>
+        <button class="replay-btn" onclick="replayBars()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     08  TOAST NOTIFICATIONS
+════════════════════════════════════════════ -->
+<section class="comp" id="c8">
+    <div class="comp-label">Component 08</div>
+    <div class="comp-title">Toast Notifications</div>
+    <div class="comp-desc">Slide-in alert banners với 3 trạng thái: success / warning / error. Dùng trong live demo slides để show system feedback.</div>
+    <div class="demo">
+        <div class="toast-demo">
+            <div class="live-row">
+                <div class="pulse-dot"></div>
+                <span class="live-txt">Hệ thống đang live</span>
+            </div>
+            <div class="toast" id="t1">
+                <div class="toast-icon ok">✅</div>
+                <div><div class="toast-title">Giao dịch thành công</div><div class="toast-message">Chuyển 5.000.000 đ → Nguyễn Văn A · vừa xong</div></div>
+            </div>
+            <div class="toast" id="t2">
+                <div class="toast-icon warn">⚠️</div>
+                <div><div class="toast-title">Xác minh danh tính</div><div class="toast-message">Vui lòng xác nhận OTP để tiếp tục</div></div>
+            </div>
+            <div class="toast" id="t3">
+                <div class="toast-icon err">🔴</div>
+                <div><div class="toast-title">Hạn mức không đủ</div><div class="toast-message">Số dư khả dụng thấp hơn 500.000 đ</div></div>
+            </div>
+        </div>
+        <button class="replay-btn" onclick="replayToasts()">↺ Replay</button>
+    </div>
+</section>
+<hr class="div">
+
+<!-- ════════════════════════════════════════════
+     09  SHIMMER → CONTENT REVEAL
+════════════════════════════════════════════ -->
+<section class="comp" id="c9">
+    <div class="comp-label">Component 09</div>
+    <div class="comp-title">Shimmer → Content Reveal</div>
+    <div class="comp-desc">Skeleton loading state chuyển sang nội dung thật. Mô phỏng async data loading trong live demo — rất ấn tượng trên sân khấu.</div>
+    <div class="demo">
+        <div class="shim-card" id="shimCard">
+            <div class="shim-loading" style="display:flex;gap:1rem;align-items:center;width:100%">
+                <div class="shim-avatar"></div>
+                <div class="shim-lines">
+                    <div class="shim-line w60"></div>
+                    <div class="shim-line w80"></div>
+                    <div class="shim-line w40"></div>
+                </div>
+            </div>
+            <div class="shim-real">
+                <div class="shim-real-avatar">TN</div>
+                <div>
+                    <div class="shim-real-name">Trần Nhật Phong</div>
+                    <div class="shim-real-role">Product Manager · Techcombank Digital</div>
+                    <div class="shim-real-badge">Premium Customer</div>
+                </div>
+            </div>
+        </div>
+        <button class="shim-btn" onclick="replayShimmer()">↺ Replay shimmer</button>
+    </div>
+</section>
+
+<script>
+/* ── EASING ── */
+function easeOutExpo(t) { return t===1 ? 1 : 1 - Math.pow(2,-10*t); }
+
+/* ════ 01  COUNTER ════ */
+function animateNum(el, end, dur, suffix) {
+    const start = performance.now();
+    const isFloat = !Number.isInteger(end);
+    (function tick(now) {
+        const p = Math.min((now-start)/dur, 1);
+        const v = easeOutExpo(p) * end;
+        el.textContent = (isFloat ? v.toFixed(1) : Math.round(v)) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+    })(start);
+}
+function runCounter() {
+    document.querySelectorAll('.stat-number').forEach(el => {
+        animateNum(el, parseFloat(el.dataset.target), 1600, el.dataset.suffix||'');
+    });
+}
+function replayCounter() {
+    document.querySelectorAll('.stat-number').forEach(el => el.textContent='0');
+    setTimeout(runCounter, 80);
+}
+
+/* ════ 02  PROGRESS ════ */
+function runProgress() {
+    document.querySelectorAll('.prog-fill').forEach(f => f.style.width = f.dataset.width+'%');
+}
+function replayProgress() {
+    document.querySelectorAll('.prog-fill').forEach(f => {
+        f.style.transition='none'; f.style.width='0';
+    });
+    setTimeout(()=>{
+        document.querySelectorAll('.prog-fill').forEach(f => {
+            f.style.transition='width 1.2s cubic-bezier(0.16,1,0.3,1)';
+            f.style.width=f.dataset.width+'%';
+        });
+    }, 60);
+}
+
+/* ════ 03  CARDS ════ */
+function runCards() {
+    [...document.querySelectorAll('#cardGrid .feat-card')].forEach((c,i)=>
+        setTimeout(()=>c.classList.add('vis'), i*110));
+}
+function replayCards() {
+    document.querySelectorAll('#cardGrid .feat-card').forEach(c=>c.classList.remove('vis'));
+    setTimeout(runCards, 80);
+}
+
+/* ════ 04  TYPEWRITER ════ */
+const phrases = [
+    'Ngân hàng cho tương lai.',
+    'Vì một Việt Nam thịnh vượng.',
+    'Techcombank — Cùng bạn đi xa hơn.'
+];
+let twIdx=0, twTimer=null;
+function typePhrase(phrase, el, done) {
+    let i=0; el.textContent='';
+    (function t(){
+        if(i<phrase.length){ el.textContent+=phrase[i++]; twTimer=setTimeout(t,60); }
+        else setTimeout(()=>erasePhrase(el,done),1800);
+    })();
+}
+function erasePhrase(el, done) {
+    (function e(){
+        if(el.textContent.length){ el.textContent=el.textContent.slice(0,-1); twTimer=setTimeout(e,32); }
+        else done();
+    })();
+}
+function runTypewriter() {
+    const el=document.getElementById('twContent');
+    if(!el) return;
+    typePhrase(phrases[twIdx%phrases.length], el, ()=>{ twIdx++; setTimeout(runTypewriter,350); });
+}
+function replayTypewriter() {
+    clearTimeout(twTimer); twIdx=0;
+    const el=document.getElementById('twContent');
+    if(el) el.textContent='';
+    setTimeout(runTypewriter, 100);
+}
+
+/* ════ 05  TIMELINE ════ */
+function runTimeline() {
+    [...document.querySelectorAll('#timeline .tl-item')].forEach((it,i)=>
+        setTimeout(()=>it.classList.add('vis'), i*260));
+}
+function replayTimeline() {
+    document.querySelectorAll('#timeline .tl-item').forEach(it=>it.classList.remove('vis'));
+    setTimeout(runTimeline, 80);
+}
+
+/* ════ 06  DONUTS ════ */
+const C = 2*Math.PI*40; // circumference r=40
+function runDonuts() {
+    document.querySelectorAll('.donut-fill').forEach(c=>{
+        c.style.strokeDashoffset = C*(1 - parseFloat(c.dataset.pct)/100);
+    });
+}
+function replayDonuts() {
+    document.querySelectorAll('.donut-fill').forEach(c=>{
+        c.style.transition='none'; c.style.strokeDashoffset=C;
+    });
+    setTimeout(()=>{
+        document.querySelectorAll('.donut-fill').forEach(c=>{
+            c.style.transition='stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1)';
+            c.style.strokeDashoffset = C*(1 - parseFloat(c.dataset.pct)/100);
+        });
+    }, 60);
+}
+
+/* ════ 07  BARS ════ */
+function runBars() {
+    [...document.querySelectorAll('#barChart .bar-col')].forEach((col,i)=>{
+        setTimeout(()=>{
+            col.querySelector('.bar-fill').style.height = col.querySelector('.bar-fill').dataset.height+'%';
+            col.classList.add('anim');
+        }, i*130);
+    });
+}
+function replayBars() {
+    document.querySelectorAll('#barChart .bar-fill').forEach(f=>{
+        f.style.transition='none'; f.style.height='0';
+    });
+    document.querySelectorAll('#barChart .bar-col').forEach(c=>c.classList.remove('anim'));
+    setTimeout(()=>{
+        document.querySelectorAll('#barChart .bar-fill').forEach(f=>
+            f.style.transition='height 1.2s cubic-bezier(0.16,1,0.3,1)');
+        runBars();
+    }, 60);
+}
+
+/* ════ 08  TOASTS ════ */
+function runToasts() {
+    ['t1','t2','t3'].forEach((id,i)=>
+        setTimeout(()=>document.getElementById(id)?.classList.add('vis'), i*600));
+}
+function replayToasts() {
+    ['t1','t2','t3'].forEach(id=>document.getElementById(id)?.classList.remove('vis'));
+    setTimeout(runToasts, 200);
+}
+
+/* ════ 09  SHIMMER ════ */
+function runShimmer() {
+    const card=document.getElementById('shimCard');
+    if(!card) return;
+    card.classList.remove('revealed');
+    card.querySelector('.shim-loading').style.display='flex';
+    card.querySelector('.shim-real').style.display='none';
+    setTimeout(()=>{
+        card.classList.add('revealed');
+    }, 2200);
+}
+function replayShimmer() { runShimmer(); }
+
+/* ════ SCROLL TRIGGER ════ */
+const triggered = new Set();
+const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(!e.isIntersecting || triggered.has(e.target.id)) return;
+        triggered.add(e.target.id);
+        const id = e.target.id;
+        if(id==='c1') runCounter();
+        if(id==='c2') runProgress();
+        if(id==='c3') runCards();
+        if(id==='c4') runTypewriter();
+        if(id==='c5') runTimeline();
+        if(id==='c6') runDonuts();
+        if(id==='c7') runBars();
+        if(id==='c8') runToasts();
+        if(id==='c9') runShimmer();
+    });
+}, {threshold: 0.25});
+document.querySelectorAll('.comp').forEach(s=>obs.observe(s));
+
+/* ── NAV ACTIVE ── */
+const navLinks = [...document.querySelectorAll('.nav a')];
+const navObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting){
+            navLinks.forEach(l=>l.classList.remove('active'));
+            document.querySelector(`.nav a[href="#${e.target.id}"]`)?.classList.add('active');
+        }
+    });
+},{threshold:0.5});
+document.querySelectorAll('.comp').forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>

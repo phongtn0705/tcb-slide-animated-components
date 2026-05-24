@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>03 · Staggered Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-bg:#f5f6f8; --tcb-text:#212121; --tcb-muted:#616161; --tcb-line:#e3e4e6; --font:'Be Vietnam Pro',sans-serif; }
+.card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; font-family:var(--font); }
+.feat-card { background:var(--tcb-bg); border:1px solid var(--tcb-line); border-radius:8px; padding:1.25rem; opacity:0; transform:translateY(18px); transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1); }
+.feat-card.vis { opacity:1; transform:translateY(0); }
+.feat-icon { width:36px;height:36px;background:rgba(237,27,36,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:.75rem; }
+.feat-name { font-size:.875rem;font-weight:600;color:var(--tcb-text);margin-bottom:.3rem; }
+.feat-desc { font-size:.78rem;color:var(--tcb-muted);line-height:1.55; }
+body { background:#fff; padding:2rem; }
+</style>
+</head>
+<body>
+<div class="card-grid" id="cardGrid">
+  <div class="feat-card"><div class="feat-icon">💳</div><div class="feat-name">Thẻ thông minh</div><div class="feat-desc">Thanh toán contactless, cashback tự động</div></div>
+  <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-name">Mobile Banking</div><div class="feat-desc">Giao dịch 24/7 ngay trên điện thoại</div></div>
+  <div class="feat-card"><div class="feat-icon">🏦</div><div class="feat-name">Tiết kiệm linh hoạt</div><div class="feat-desc">Lãi suất cạnh tranh, tất toán bất kỳ lúc</div></div>
+  <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-name">Bảo mật cao</div><div class="feat-desc">Xác thực sinh trắc học &amp; OTP</div></div>
+  <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-name">Quản lý chi tiêu</div><div class="feat-desc">Phân tích tự động theo danh mục</div></div>
+  <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-name">Chuyển tiền quốc tế</div><div class="feat-desc">Hơn 150 quốc gia, tỷ giá cạnh tranh</div></div>
+</div>
+<script>
+function runCards(){
+  [...document.querySelectorAll('#cardGrid .feat-card')].forEach((c,i)=>setTimeout(()=>c.classList.add('vis'),i*110));
+}
+setTimeout(runCards,200);
+</script>
+</body>
+</html>

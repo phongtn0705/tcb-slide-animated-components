@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>05 · Animated Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-card:#fff; --tcb-text:#212121; --tcb-muted:#616161; --tcb-line:#e3e4e6; --font:'Be Vietnam Pro',sans-serif; }
+.timeline { position:relative; padding-left:2rem; font-family:var(--font); }
+.timeline::before { content:''; position:absolute; left:7px; top:8px; bottom:8px; width:2px; background:var(--tcb-line); }
+.tl-item { position:relative; padding-bottom:1.5rem; opacity:0; transform:translateX(-14px); transition:all .5s cubic-bezier(0.16,1,0.3,1); }
+.tl-item:last-child { padding-bottom:0; }
+.tl-item.vis { opacity:1; transform:translateX(0); }
+.tl-dot { position:absolute; left:-2rem; top:4px; width:16px; height:16px; border-radius:50%; background:var(--tcb-card); border:2px solid var(--tcb-line); transition:border-color .3s,background .3s; }
+.tl-item.vis .tl-dot { border-color:var(--tcb-red); background:var(--tcb-red); }
+.tl-year  { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--tcb-red); }
+.tl-title { font-size:1rem; font-weight:600; color:var(--tcb-text); margin:.1rem 0 .2rem; }
+.tl-desc  { font-size:.85rem; color:var(--tcb-muted); line-height:1.5; }
+body { background:#fff; padding:2rem; max-width:480px; }
+</style>
+</head>
+<body>
+<div class="timeline" id="timeline">
+  <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2008</div><div class="tl-title">Thành lập Techcombank</div><div class="tl-desc">Ra mắt với vốn điều lệ 20 tỷ đồng tại Hà Nội</div></div>
+  <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2015</div><div class="tl-title">Digital Transformation</div><div class="tl-desc">Ra mắt F@st Mobile — ứng dụng ngân hàng số đầu tiên</div></div>
+  <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2020</div><div class="tl-title">Top 10 NH Asia-Pacific</div><div class="tl-desc">Được vinh danh tại giải thưởng The Asian Banker</div></div>
+  <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2024</div><div class="tl-title">12.5M Khách hàng</div><div class="tl-desc">Mốc khách hàng lớn nhất trong lịch sử ngân hàng</div></div>
+</div>
+<script>
+function runTimeline(){
+  [...document.querySelectorAll('#timeline .tl-item')].forEach((it,i)=>setTimeout(()=>it.classList.add('vis'),i*260));
+}
+setTimeout(runTimeline,300);
+</script>
+</body>
+</html>

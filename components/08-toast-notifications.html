@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>08 · Toast Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-text:#212121; --tcb-muted:#616161; --tcb-line:#e3e4e6; --tcb-card:#fff; --font:'Be Vietnam Pro',sans-serif; }
+.toast-demo { display:flex; flex-direction:column; gap:.75rem; align-items:flex-start; font-family:var(--font); }
+.live-row { display:flex; align-items:center; gap:.65rem; margin-bottom:.25rem; }
+.live-txt  { font-size:.78rem; color:var(--tcb-muted); }
+.pulse-dot { width:8px;height:8px;background:#22c55e;border-radius:50%;position:relative; }
+.pulse-dot::before { content:'';position:absolute;inset:-4px;border-radius:50%;background:rgba(34,197,94,.3);animation:pulse-ring 1.5s ease-out infinite; }
+@keyframes pulse-ring { 0%{transform:scale(.8);opacity:1} 100%{transform:scale(2.2);opacity:0} }
+.toast { display:flex;align-items:center;gap:.75rem;padding:.875rem 1.25rem;border-radius:8px;border:1px solid var(--tcb-line);background:var(--tcb-card);box-shadow:0 4px 16px rgba(0,0,0,.06);max-width:360px;opacity:0;transform:translateX(-24px);transition:all .5s cubic-bezier(0.16,1,0.3,1); }
+.toast.vis { opacity:1; transform:translateX(0); }
+.toast-icon { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
+.toast-icon.ok   { background:rgba(34,197,94,.12); }
+.toast-icon.warn { background:rgba(214,185,115,.22); }
+.toast-icon.err  { background:rgba(237,27,36,.1); }
+.toast-title   { font-size:.875rem; font-weight:600; color:var(--tcb-text); }
+.toast-message { font-size:.78rem; color:var(--tcb-muted); }
+body { background:#fff; padding:2rem; }
+</style>
+</head>
+<body>
+<div class="toast-demo">
+  <div class="live-row"><div class="pulse-dot"></div><span class="live-txt">Hệ thống đang live</span></div>
+  <div class="toast" id="t1"><div class="toast-icon ok">✅</div><div><div class="toast-title">Giao dịch thành công</div><div class="toast-message">Chuyển 5.000.000 đ → Nguyễn Văn A · vừa xong</div></div></div>
+  <div class="toast" id="t2"><div class="toast-icon warn">⚠️</div><div><div class="toast-title">Xác minh danh tính</div><div class="toast-message">Vui lòng xác nhận OTP để tiếp tục</div></div></div>
+  <div class="toast" id="t3"><div class="toast-icon err">🔴</div><div><div class="toast-title">Hạn mức không đủ</div><div class="toast-message">Số dư khả dụng thấp hơn 500.000 đ</div></div></div>
+</div>
+<script>
+['t1','t2','t3'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('vis'),i*600+300));
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>02 · Progress Bars</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── PASTE THIS CSS ── */
+:root {
+  --tcb-red: #ed1b24; --tcb-navy: #1b1564; --tcb-gold: #d6b973;
+  --tcb-text: #212121; --tcb-line: #e3e4e6;
+  --font: 'Be Vietnam Pro', sans-serif;
+}
+.prog-list { display: flex; flex-direction: column; gap: 1.25rem; font-family: var(--font); }
+.prog-header { display: flex; justify-content: space-between; margin-bottom: .4rem; }
+.prog-name { font-size: .875rem; font-weight: 600; color: var(--tcb-text); }
+.prog-val  { font-size: .875rem; font-weight: 700; color: var(--tcb-red); }
+.prog-track { height: 6px; background: var(--tcb-line); border-radius: 99px; overflow: hidden; }
+.prog-fill  { height: 100%; border-radius: 99px; width: 0; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+.prog-fill.red   { background: var(--tcb-red); }
+.prog-fill.navy  { background: var(--tcb-navy); }
+.prog-fill.gold  { background: var(--tcb-gold); }
+/* ── END CSS ── */
+body { background: #fff; padding: 2rem; max-width: 500px; }
+</style>
+</head>
+<body>
+
+<!-- ── PASTE THIS HTML ── -->
+<div class="prog-list">
+  <div>
+    <div class="prog-header"><span class="prog-name">Tiền gửi</span><span class="prog-val">84%</span></div>
+    <div class="prog-track"><div class="prog-fill red" data-width="84"></div></div>
+  </div>
+  <div>
+    <div class="prog-header"><span class="prog-name">Cho vay cá nhân</span><span class="prog-val">67%</span></div>
+    <div class="prog-track"><div class="prog-fill navy" data-width="67"></div></div>
+  </div>
+  <div>
+    <div class="prog-header"><span class="prog-name">Thanh toán số</span><span class="prog-val">91%</span></div>
+    <div class="prog-track"><div class="prog-fill gold" data-width="91"></div></div>
+  </div>
+</div>
+<!-- ── END HTML ── -->
+
+<script>
+/* ── PASTE THIS JS ── */
+function runProgress(){
+  document.querySelectorAll('.prog-fill').forEach(f=>f.style.width=f.dataset.width+'%');
+}
+/* trigger: call runProgress() on slide visible */
+/* ── END JS ── */
+
+setTimeout(runProgress, 300);
+</script>
+</body>
+</html>

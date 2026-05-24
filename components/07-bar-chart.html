@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>07 · Bar Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-navy:#1b1564; --tcb-gold:#d6b973; --tcb-text:#212121; --tcb-muted:#616161; --font:'Be Vietnam Pro',sans-serif; }
+.bar-chart { display:flex; align-items:flex-end; gap:.6rem; height:170px; padding-top:1.5rem; font-family:var(--font); }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:.35rem; height:100%; }
+.bar-val-lbl { font-size:.72rem; font-weight:700; color:var(--tcb-text); opacity:0; transition:opacity .3s ease 1.1s; }
+.bar-col.anim .bar-val-lbl { opacity:1; }
+.bar-track { flex:1; width:100%; display:flex; align-items:flex-end; }
+.bar-fill { width:100%; border-radius:4px 4px 0 0; height:0; transition:height 1.2s cubic-bezier(0.16,1,0.3,1); }
+.bar-fill.red  { background:var(--tcb-red); }
+.bar-fill.navy { background:var(--tcb-navy); }
+.bar-fill.gold { background:var(--tcb-gold); }
+.bar-x-lbl { font-size:.7rem; color:var(--tcb-muted); }
+body { background:#fff; padding:2rem; }
+</style>
+</head>
+<body>
+<div class="bar-chart" id="barChart">
+  <div class="bar-col"><div class="bar-val-lbl">Q1</div><div class="bar-track"><div class="bar-fill red" data-height="55"></div></div><div class="bar-x-lbl">2023</div></div>
+  <div class="bar-col"><div class="bar-val-lbl">Q2</div><div class="bar-track"><div class="bar-fill red" data-height="70"></div></div><div class="bar-x-lbl">2023</div></div>
+  <div class="bar-col"><div class="bar-val-lbl">Q3</div><div class="bar-track"><div class="bar-fill navy" data-height="62"></div></div><div class="bar-x-lbl">2023</div></div>
+  <div class="bar-col"><div class="bar-val-lbl">Q4</div><div class="bar-track"><div class="bar-fill navy" data-height="85"></div></div><div class="bar-x-lbl">2023</div></div>
+  <div class="bar-col"><div class="bar-val-lbl">Q1</div><div class="bar-track"><div class="bar-fill gold" data-height="90"></div></div><div class="bar-x-lbl">2024</div></div>
+  <div class="bar-col"><div class="bar-val-lbl">Q2</div><div class="bar-track"><div class="bar-fill gold" data-height="100"></div></div><div class="bar-x-lbl">2024</div></div>
+</div>
+<script>
+function runBars(){
+  [...document.querySelectorAll('#barChart .bar-col')].forEach((col,i)=>{
+    setTimeout(()=>{
+      col.querySelector('.bar-fill').style.height=col.querySelector('.bar-fill').dataset.height+'%';
+      col.classList.add('anim');
+    },i*130);
+  });
+}
+setTimeout(runBars,300);
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>06 · Donut Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --tcb-red:#ed1b24; --tcb-navy:#1b1564; --tcb-gold:#d6b973; --tcb-text:#212121; --tcb-line:#e3e4e6; --font:'Be Vietnam Pro',sans-serif; }
+.donut-row { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; font-family:var(--font); }
+.donut-item { display:flex; flex-direction:column; align-items:center; gap:.75rem; }
+.donut-svg  { width:110px; height:110px; }
+.donut-track { fill:none; stroke:var(--tcb-line); stroke-width:10; }
+.donut-fill  { fill:none; stroke-width:10; stroke-linecap:round; transform-origin:center; transform:rotate(-90deg); stroke-dasharray:251.2; stroke-dashoffset:251.2; transition:stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1); }
+.donut-ct  { font-family:var(--font); font-size:17px; font-weight:700; fill:var(--tcb-text); text-anchor:middle; dominant-baseline:middle; }
+.donut-lbl { font-size:.78rem; font-weight:600; color:#616161; text-align:center; }
+body { background:#fff; padding:2rem; }
+</style>
+</head>
+<body>
+<div class="donut-row" id="donutRow">
+  <div class="donut-item">
+    <svg class="donut-svg" viewBox="0 0 100 100">
+      <circle class="donut-track" cx="50" cy="50" r="40"/>
+      <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#ed1b24" data-pct="82"/>
+      <text class="donut-ct" x="50" y="50">82%</text>
+    </svg>
+    <div class="donut-lbl">NPS Score</div>
+  </div>
+  <div class="donut-item">
+    <svg class="donut-svg" viewBox="0 0 100 100">
+      <circle class="donut-track" cx="50" cy="50" r="40"/>
+      <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#1b1564" data-pct="67"/>
+      <text class="donut-ct" x="50" y="50">67%</text>
+    </svg>
+    <div class="donut-lbl">Tỷ lệ duyệt vay</div>
+  </div>
+  <div class="donut-item">
+    <svg class="donut-svg" viewBox="0 0 100 100">
+      <circle class="donut-track" cx="50" cy="50" r="40"/>
+      <circle class="donut-fill" cx="50" cy="50" r="40" stroke="#d6b973" data-pct="94"/>
+      <text class="donut-ct" x="50" y="50">94%</text>
+    </svg>
+    <div class="donut-lbl">Khách hàng hài lòng</div>
+  </div>
+</div>
+<script>
+const C=2*Math.PI*40;
+function runDonuts(){
+  document.querySelectorAll('.donut-fill').forEach(c=>{
+    c.style.strokeDashoffset=C*(1-parseFloat(c.dataset.pct)/100);
+  });
+}
+setTimeout(runDonuts,300);
+</script>
+</body>
+</html>
